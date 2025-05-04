@@ -561,292 +561,427 @@
   <!-- Toast Notification -->
   <div class="toast" id="toast"></div>
 
-  <script>
-    // Global variable to store posts
-    let postData = [];
+ <script>
+  // community.js
+
+// Global variable to store posts
+let postData = [];
+const LOCAL_STORAGE_KEY = 'sareeCommunityPosts';
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Load posts from localStorage or API
+  loadPosts();
   
-    document.addEventListener('DOMContentLoaded', function() {
-      // Load posts from API
-      loadPostsFromAPI();
-      
-      // Set up form submission
-      const postForm = document.getElementById('postForm');
-      postForm.addEventListener('submit', handlePostSubmit);
-      
-      // Set up image preview
-      const postImageInput = document.getElementById('postImage');
-      const mediaPreview = document.getElementById('mediaPreview');
-      
-      postImageInput.addEventListener('change', function(e) {
-        mediaPreview.innerHTML = '';
-        if (e.target.files.length > 0) {
-          const file = e.target.files[0];
-          const reader = new FileReader();
+  // Set up form submission
+  const postForm = document.getElementById('postForm');
+  if (postForm) {
+    postForm.addEventListener('submit', handlePostSubmit);
+  }
+  
+  // Set up image preview
+  const postImageInput = document.getElementById('postImage');
+  const mediaPreview = document.getElementById('mediaPreview');
+  
+  if (postImageInput && mediaPreview) {
+    postImageInput.addEventListener('change', function(e) {
+      mediaPreview.innerHTML = '';
+      if (e.target.files.length > 0) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+          const previewItem = document.createElement('div');
+          previewItem.className = 'media-preview-item';
+          previewItem.innerHTML = `
+            <img src="${event.target.result}" alt="Preview">
+            <button class="remove-media" type="button">&times;</button>
+          `;
+          mediaPreview.appendChild(previewItem);
           
-          reader.onload = function(event) {
-            const previewItem = document.createElement('div');
-            previewItem.className = 'media-preview-item';
-            previewItem.innerHTML = `
-              <img src="${event.target.result}" alt="Preview">
-              <button class="remove-media" type="button">&times;</button>
-            `;
-            mediaPreview.appendChild(previewItem);
-            
-            // Add remove functionality
-            previewItem.querySelector('.remove-media').addEventListener('click', function() {
-              mediaPreview.removeChild(previewItem);
-              postImageInput.value = '';
-            });
-          };
-          
-          reader.readAsDataURL(file);
-        }
-      });
+          // Add remove functionality
+          previewItem.querySelector('.remove-media').addEventListener('click', function() {
+            mediaPreview.removeChild(previewItem);
+            postImageInput.value = '';
+          });
+        };
+        
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+});
+
+function loadPosts() {
+  const postsFeed = document.getElementById('postsFeed');
+  if (!postsFeed) return;
+  
+  postsFeed.innerHTML = '<div class="post-card" style="text-align: center; padding: 2rem;"><h3>Loading posts...</h3></div>';
+
+  // First try to fetch from API
+  fetch('http://localhost:5000/api/posts')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(apiPosts => {
+      // Transform API data to match our expected format
+      postData = apiPosts.map(post => ({
+        id: post._id,
+        letter: post.name ? post.name.charAt(0).toUpperCase() : 'U',
+        name: post.name,
+        designation: post.designation,
+        time: post.time || post.createdAt,
+        title: post.title,
+        description: post.description,
+        image: post.image,
+        comments: (post.comments || []).map(comment => ({
+          user: comment.user,
+          text: comment.text,
+          time: comment.createdAt || comment.time
+        }))
+      }));
+      
+      savePostsToLocalStorage();
+      renderPosts(postData);
+    })
+    .catch(error => {
+      console.error('Error fetching posts:', error);
+      
+      // If API fails, try to load from localStorage
+      const savedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (savedPosts) {
+        postData = JSON.parse(savedPosts);
+        console.log('Posts loaded from localStorage:', postData);
+        renderPosts(postData);
+      } else {
+        showErrorUI();
+      }
+    });
+}
+
+
+function savePostsToLocalStorage() {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(postData));
+}
+
+function renderPosts(posts) {
+  const postsFeed = document.getElementById('postsFeed');
+  if (!postsFeed) return;
+  
+  postsFeed.innerHTML = '';
+  
+  if (!posts || posts.length === 0) {
+    postsFeed.innerHTML = `
+      <div class="post-card" style="text-align: center; padding: 2rem;">
+        <h3>No posts yet</h3>
+        <p>Be the first to share something with the community!</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // Sort posts by time (newest first)
+  const sortedPosts = [...posts].sort((a, b) => {
+    return new Date(b.time) - new Date(a.time);
+  });
+  
+  // Render all posts
+  sortedPosts.forEach(post => {
+    renderPost(post);
+  });
+}
+
+function renderPost(post) {
+  const postsFeed = document.getElementById('postsFeed');
+  if (!postsFeed) return;
+  
+  const postElement = document.createElement('div');
+  postElement.className = 'post-card';
+  postElement.dataset.postId = post.id;
+  
+  // Handle the post data structure
+  const authorInitial = post.name ? post.name.charAt(0).toUpperCase() : 'U';
+  const authorName = post.name || 'Unknown';
+  const authorRole = post.designation || 'Community Member';
+  const postTitle = post.title || 'Untitled Post';
+  const postContent = post.description || 'No content';
+  const postImage = post.image || '';
+  const postComments = post.comments || [];
+  
+  postElement.innerHTML = `
+    <div class="post-header">
+      <div class="post-author">
+        <div class="author-avatar">${authorInitial}</div>
+        <div class="author-info">
+          <h3>${authorName}</h3>
+          <p>${authorRole}</p>
+        </div>
+      </div>
+      <div class="post-date">${formatTime(post.time || new Date().toISOString())}</div>
+    </div>
+    <div class="post-content">
+      <h3 class="post-title">${postTitle}</h3>
+      <p class="post-text">${postContent}</p>
+      ${postImage ? `<div class="post-media"><img src="${postImage}" alt="Post image"></div>` : ''}
+    </div>
+    <div class="post-actions">
+      <div class="action-buttons">
+        <button class="action-btn comment-btn">
+          <i class="fas fa-comment"></i>
+          <span>Comment</span>
+        </button>
+        <div class="share-container" style="position: relative;">
+          <button class="action-btn share-btn">
+            <i class="fas fa-share-alt"></i>
+            <span>Share</span>
+          </button>
+          <div class="share-options" style="right: 0; left: auto;">
+            <a href="#" class="share-option" data-platform="facebook">
+              <i class="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="#" class="share-option" data-platform="whatsapp">
+              <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="#" class="share-option" data-platform="copy">
+              <i class="fas fa-copy"></i> Copy Link
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="comments-section" style="display: none;">
+      <div class="comment-form">
+        <input type="text" class="comment-input" placeholder="Write a comment...">
+        <button class="btn btn-primary post-comment-btn">Post</button>
+      </div>
+      <div class="comments-list"></div>
+    </div>
+  `;
+  
+  // Add event listeners
+  const commentBtn = postElement.querySelector('.comment-btn');
+  const commentsSection = postElement.querySelector('.comments-section');
+  if (commentBtn && commentsSection) {
+    commentBtn.addEventListener('click', () => {
+      commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+      if (commentsSection.style.display === 'block') {
+        renderComments(postElement, post);
+      }
+    });
+  }
+  
+  const postCommentBtn = postElement.querySelector('.post-comment-btn');
+  const commentInput = postElement.querySelector('.comment-input');
+  if (postCommentBtn && commentInput) {
+    postCommentBtn.addEventListener('click', () => {
+      const commentText = commentInput.value.trim();
+      if (commentText) {
+        addComment(postElement, post.id, commentText, "You");
+        commentInput.value = '';
+      }
     });
     
-    function loadPostsFromAPI() {
-      const postsFeed = document.getElementById('postsFeed');
-      postsFeed.innerHTML = '<div class="post-card" style="text-align: center; padding: 2rem;"><h3>Loading posts...</h3></div>';
-      
-      fetch('http://localhost:5000/api/posts')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          postData = data;
-          console.log('Community posts loaded:', postData);
-          renderPosts(data);
-        })
-        .catch(error => {
-          console.error('Error fetching posts:', error);
-          showErrorUI();
-        });
-    }
-    
-    function renderPosts(posts) {
-      const postsFeed = document.getElementById('postsFeed');
-      postsFeed.innerHTML = '';
-      
-      if (!posts || posts.length === 0) {
-        postsFeed.innerHTML = `
-          <div class="post-card" style="text-align: center; padding: 2rem;">
-            <h3>No posts yet</h3>
-            <p>Be the first to share something with the community!</p>
-          </div>
-        `;
-        return;
-      }
-      
-      // Render all posts
-      posts.forEach(post => {
-        renderPost(post);
-      });
-    }
-    
-    function renderPost(post) {
-      const postsFeed = document.getElementById('postsFeed');
-      
-      const postElement = document.createElement('div');
-      postElement.className = 'post-card';
-      postElement.dataset.postId = post.id;
-      
-      // Handle the API response structure
-      const authorInitial = post.name ? post.name.charAt(0).toUpperCase() : 'U';
-      const authorName = post.name || 'Unknown';
-      const authorRole = post.designation || 'Community Member';
-      const postTitle = post.title || 'Untitled Post';
-      const postContent = post.description || 'No content';
-      const postImage = post.image || '';
-      const postComments = post.comments || [];
-      
-      postElement.innerHTML = `
-        <div class="post-header">
-          <div class="post-author">
-            <div class="author-avatar">${authorInitial}</div>
-            <div class="author-info">
-              <h3>${authorName}</h3>
-              <p>${authorRole}</p>
-            </div>
-          </div>
-          <div class="post-date">${formatTime(post.time || new Date().toISOString())}</div>
-        </div>
-        <div class="post-content">
-          <h3 class="post-title">${postTitle}</h3>
-          <p class="post-text">${postContent}</p>
-          ${postImage ? `<div class="post-media"><img src="${postImage}" alt="Post image"></div>` : ''}
-        </div>
-        <div class="post-actions">
-          <div class="action-buttons">
-            <button class="action-btn comment-btn">
-              <i class="fas fa-comment"></i>
-              <span>Comment</span>
-            </button>
-            <div class="share-container" style="position: relative;">
-              <button class="action-btn share-btn">
-                <i class="fas fa-share-alt"></i>
-                <span>Share</span>
-              </button>
-              <div class="share-options" style="right: 0; left: auto;">
-                <a href="#" class="share-option" data-platform="facebook">
-                  <i class="fab fa-facebook"></i> Facebook
-                </a>
-                <a href="#" class="share-option" data-platform="whatsapp">
-                  <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
-                <a href="#" class="share-option" data-platform="copy">
-                  <i class="fas fa-copy"></i> Copy Link
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="comments-section" style="display: none;">
-          <div class="comment-form">
-            <input type="text" class="comment-input" placeholder="Write a comment...">
-            <button class="btn btn-primary post-comment-btn">Post</button>
-          </div>
-          <div class="comments-list"></div>
-        </div>
-      `;
-      
-      // Add event listeners
-      const commentBtn = postElement.querySelector('.comment-btn');
-      const commentsSection = postElement.querySelector('.comments-section');
-      commentBtn.addEventListener('click', () => {
-        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
-        if (commentsSection.style.display === 'block') {
-          renderComments(postElement, post);
+    // Allow pressing Enter to post comment
+    commentInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+          addComment(postElement, post.id, commentText, "You");
+          commentInput.value = '';
         }
-      });
-      
-      const postCommentBtn = postElement.querySelector('.post-comment-btn');
-      const commentInput = postElement.querySelector('.comment-input');
-      postCommentBtn.addEventListener('click', () => {
-        addComment(postElement, post.id, commentInput.value.trim(), "You");
-        commentInput.value = '';
-      });
-      
-      const shareBtn = postElement.querySelector('.share-btn');
-      const shareOptions = postElement.querySelector('.share-options');
-      shareBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        shareOptions.classList.toggle('show');
-      });
-      
-      document.addEventListener('click', () => shareOptions.classList.remove('show'));
-      setupShareOptions(postElement, post);
-      
-      // Add to the beginning of the feed
-      postsFeed.insertBefore(postElement, postsFeed.firstChild);
+      }
+    });
+  }
+  
+  const shareBtn = postElement.querySelector('.share-btn');
+  const shareOptions = postElement.querySelector('.share-options');
+  if (shareBtn && shareOptions) {
+    shareBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      shareOptions.classList.toggle('show');
+    });
+    
+    document.addEventListener('click', () => shareOptions.classList.remove('show'));
+    setupShareOptions(postElement, post);
+  }
+  
+  // Add to the feed
+  postsFeed.appendChild(postElement);
+}
+
+function showErrorUI() {
+  const postsFeed = document.getElementById('postsFeed');
+  if (!postsFeed) return;
+  
+  postsFeed.innerHTML = `
+    <div class="post-card" style="text-align: center; padding: 2rem;">
+      <h3>Could not load community posts</h3>
+      <p>Please try refreshing the page or check back later.</p>
+    </div>
+  `;
+}
+
+function handlePostSubmit(e) {
+  e.preventDefault();
+  
+  const title = document.getElementById('postTitle').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+  const imageInput = document.getElementById('postImage');
+  
+  if (!title || !content) {
+    showToast('Please fill in both title and content');
+    return;
+  }
+
+  const newPost = {
+    id: Date.now().toString(),
+    letter: "Y",
+    name: "You",
+    designation: "Community Member",
+    time: new Date().toISOString(),
+    title: title,
+    description: content,
+    image: "",
+    comments: []
+  };
+  
+  if (imageInput && imageInput.files.length > 0) {
+    const file = imageInput.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = function(event) {
+      newPost.image = event.target.result;
+      addPostToLocalStorage(newPost);
+      addPostToUI(newPost);
+    };
+    
+    reader.readAsDataURL(file);
+  } else {
+    addPostToLocalStorage(newPost);
+    addPostToUI(newPost);
+  }
+}
+
+function addPostToLocalStorage(post) {
+  // First send to API
+  fetch('http://localhost:5000/api/posts', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(post)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Post saved to API:', data);
+    
+    // Then update local storage and UI
+    const savedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedPosts) {
+      postData = JSON.parse(savedPosts);
     }
     
-    function showErrorUI() {
-      const postsFeed = document.getElementById('postsFeed');
-      postsFeed.innerHTML = `
-        <div class="post-card" style="text-align: center; padding: 2rem;">
-          <h3>Could not load community posts</h3>
-          <p>Please try refreshing the page or check back later.</p>
+    postData.unshift(post);
+    savePostsToLocalStorage();
+    addPostToUI(post);
+    
+    document.getElementById('postForm').reset();
+    const mediaPreview = document.getElementById('mediaPreview');
+    if (mediaPreview) {
+      mediaPreview.innerHTML = '';
+    }
+    showToast('Post shared successfully!');
+  })
+  .catch(error => {
+    console.error('Error saving post to API:', error);
+    showToast('Failed to save post to server, but saved locally');
+    
+    // Fallback to local storage only if API fails
+    const savedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedPosts) {
+      postData = JSON.parse(savedPosts);
+    }
+    
+    postData.unshift(post);
+    savePostsToLocalStorage();
+    addPostToUI(post);
+    
+    document.getElementById('postForm').reset();
+    const mediaPreview = document.getElementById('mediaPreview');
+    if (mediaPreview) {
+      mediaPreview.innerHTML = '';
+    }
+    showToast('Post shared locally!');
+  });
+}
+
+function addPostToUI(post) {
+  renderPost(post);
+}
+
+function renderComments(postElement, postData) {
+  const commentsList = postElement.querySelector('.comments-list');
+  if (!commentsList) return;
+  
+  commentsList.innerHTML = '';
+  
+  if (postData.comments && postData.comments.length > 0) {
+    // Sort comments by time (newest first)
+    const sortedComments = [...postData.comments].sort((a, b) => {
+      return new Date(b.time) - new Date(a.time);
+    });
+    
+    sortedComments.forEach(comment => {
+      const commentElement = document.createElement('div');
+      commentElement.className = 'comment';
+      commentElement.innerHTML = `
+        <div class="comment-avatar">${comment.user ? comment.user.charAt(0).toUpperCase() : 'U'}</div>
+        <div class="comment-content">
+          <div class="comment-author">${comment.user || 'Unknown'}</div>
+          <div class="comment-text">${comment.text}</div>
+          <div class="comment-date">${formatTime(comment.time || new Date().toISOString())}</div>
         </div>
       `;
-    }
+      commentsList.appendChild(commentElement);
+    });
+  }
+}
+
+function addComment(postElement, postId, commentText, author) {
+  if (!commentText) return;
+  
+  const newComment = {
+    user: author,
+    text: commentText,
+    time: new Date().toISOString()
+  };
+  
+  // First send to API
+  fetch(`http://localhost:5000/api/posts/${postId}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newComment)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Comment saved to API:', data);
     
-    function handlePostSubmit(e) {
-      e.preventDefault();
-      
-      const title = document.getElementById('postTitle').value.trim();
-      const content = document.getElementById('postContent').value.trim();
-      const imageInput = document.getElementById('postImage');
-      
-      if (!title || !content) {
-        showToast('Please fill in both title and content');
-        return;
+    // Then update local storage and UI
+    const postIndex = postData.findIndex(post => post.id === postId);
+    if (postIndex !== -1) {
+      if (!postData[postIndex].comments) {
+        postData[postIndex].comments = [];
       }
-    
-      const newPost = {
-        id: Date.now(),
-        letter: "Y",
-        name: "You",
-        designation: "Community Member",
-        time: new Date().toISOString(),
-        title: title,
-        description: content,
-        image: "",
-        comments: []
-      };
+      postData[postIndex].comments.unshift(newComment);
       
-      if (imageInput.files.length > 0) {
-        const file = imageInput.files[0];
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          newPost.image = event.target.result;
-          addPostToAPI(newPost);
-          addPostToUI(newPost);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        addPostToAPI(newPost);
-        addPostToUI(newPost);
-      }
-    }
-    
-    function addPostToAPI(post) {
-      // In a real implementation, you would send this to your API
-      // For now, we'll just add it to our local postData array
-      postData.unshift(post);
+      savePostsToLocalStorage();
       
-      // Clear form
-      document.getElementById('postForm').reset();
-      document.getElementById('mediaPreview').innerHTML = '';
-      showToast('Post shared successfully!');
-    }
-    
-    function addPostToUI(post) {
-      renderPost(post);
-    }
-    
-    function renderComments(postElement, postData) {
       const commentsList = postElement.querySelector('.comments-list');
-      commentsList.innerHTML = '';
-      
-      if (postData.comments && postData.comments.length > 0) {
-        postData.comments.forEach(comment => {
-          const commentElement = document.createElement('div');
-          commentElement.className = 'comment';
-          commentElement.innerHTML = `
-            <div class="comment-avatar">${comment.user ? comment.user.charAt(0).toUpperCase() : 'U'}</div>
-            <div class="comment-content">
-              <div class="comment-author">${comment.user || 'Unknown'}</div>
-              <div class="comment-text">${comment.text}</div>
-              <div class="comment-date">Recently</div>
-            </div>
-          `;
-          commentsList.appendChild(commentElement);
-        });
-      }
-    }
-    
-    function addComment(postElement, postId, commentText, author) {
-      if (!commentText) return;
-      
-      const newComment = {
-        user: author,
-        text: commentText,
-        time: new Date().toISOString()
-      };
-      
-      // Find the post in our local data
-      const postIndex = postData.findIndex(post => post.id === postId);
-      if (postIndex !== -1) {
-        if (!postData[postIndex].comments) {
-          postData[postIndex].comments = [];
-        }
-        postData[postIndex].comments.unshift(newComment);
-        
-        // Update the UI
-        const commentsList = postElement.querySelector('.comments-list');
+      if (commentsList) {
         const commentElement = document.createElement('div');
         commentElement.className = 'comment';
         commentElement.innerHTML = `
@@ -861,93 +996,102 @@
         showToast('Comment added!');
       }
     }
-    
-    function setupShareOptions(postElement, postData) {
-      const shareOptions = postElement.querySelectorAll('.share-option');
-      const shareUrl = `${window.location.origin}${window.location.pathname}?post=${postData.id}`;
-      const shareText = `Check out this post by ${postData.name || 'a community member'}: "${postData.title || 'Untitled post'}"`;
+  })
+  .catch(error => {
+    console.error('Error saving comment:', error);
+    showToast('Failed to save comment to server');
+  });
+}
+
+function setupShareOptions(postElement, postData) {
+  const shareOptions = postElement.querySelectorAll('.share-option');
+  const shareUrl = `${window.location.origin}${window.location.pathname}?post=${postData.id}`;
+  const shareText = `Check out this post by ${postData.name || 'a community member'}: "${postData.title || 'Untitled post'}"`;
+  
+  shareOptions.forEach(option => {
+    option.addEventListener('click', function(e) {
+      e.preventDefault();
+      const platform = this.dataset.platform;
       
-      shareOptions.forEach(option => {
-        option.addEventListener('click', function(e) {
-          e.preventDefault();
-          const platform = this.dataset.platform;
-          
-          switch(platform) {
-            case 'facebook':
-              shareToFacebook(shareUrl, shareText);
-              break;
-            case 'whatsapp':
-              shareToWhatsApp(shareUrl, shareText);
-              break;
-            case 'copy':
-              copyToClipboard(shareUrl);
-              break;
-          }
-          
-          this.closest('.share-options').classList.remove('show');
-        });
-      });
-    }
-    
-    // Utility functions
-    function formatTime(time) {
-      if (typeof time === 'string') {
-        if (time.includes('ago') || time === 'Just now' || time === 'Recently') {
-          return time;
-        }
-        
-        try {
-          const now = new Date();
-          const postDate = new Date(time);
-          const diffInSeconds = Math.floor((now - postDate) / 1000);
-          
-          if (diffInSeconds < 60) return 'Just now';
-          if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-          if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
-          return `${Math.floor(diffInSeconds / 86400)} days ago`;
-        } catch (e) {
-          return time;
-        }
+      switch(platform) {
+        case 'facebook':
+          shareToFacebook(shareUrl, shareText);
+          break;
+        case 'whatsapp':
+          shareToWhatsApp(shareUrl, shareText);
+          break;
+        case 'copy':
+          copyToClipboard(shareUrl);
+          break;
       }
-      return time;
-    }
-    
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('show');
       
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
+      this.closest('.share-options').classList.remove('show');
+    });
+  });
+}
+
+// Utility functions
+function formatTime(time) {
+  if (!time) return 'Recently';
+  
+  try {
+    const now = new Date();
+    const postDate = new Date(time);
+    
+    // If the date is invalid, return a fallback
+    if (isNaN(postDate.getTime())) {
+      return 'Recently';
     }
     
-    function shareToFacebook(url, text) {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
-      showToast('Shared to Facebook!');
-    }
+    const diffInSeconds = Math.floor((now - postDate) / 1000);
     
-    function shareToWhatsApp(url, text) {
-      window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, '_blank');
-      showToast('Shared to WhatsApp!');
-    }
-    
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('Link copied to clipboard!');
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-        // Fallback
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showToast('Link copied to clipboard!');
-      });
-    }
-  </script>
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    return `${Math.floor(diffInSeconds / 86400)} days ago`;
+  } catch (e) {
+    return 'Recently';
+  }
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  
+  toast.textContent = message;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+function shareToFacebook(url, text) {
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+  showToast('Shared to Facebook!');
+}
+
+function shareToWhatsApp(url, text) {
+  window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, '_blank');
+  showToast('Shared to WhatsApp!');
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Link copied to clipboard!');
+  }).catch(err => {
+    console.error('Failed to copy: ', err);
+    // Fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    showToast('Link copied to clipboard!');
+  });
+}
+ </script>
   
 </body>
 </html>
