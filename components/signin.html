@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CiraSari - Authentication</title>
+  <link rel="icon" type="image/x-icon" href="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --deep-maroon: #800020;
+      --royal-gold: #D4AF37;
+      --ivory: #F8F1F1;
+      --teal-green: #008080;
+      --soft-peach: #FDD5B1;
+      --charcoal-grey: #333333;
+      --soft-gold: #E8C872;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Playfair Display', serif;
+    }
+
+    body {
+      background-color: var(--ivory);
+      color: var(--charcoal-grey);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .auth-header {
+      background-color: var(--deep-maroon);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .auth-header img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+
+    .auth-header h2 {
+      color: var(--royal-gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .auth-tab.active {
+      background-color: rgba(212, 175, 55, 0.1);
+      color: var(--royal-gold);
+      border-bottom: 2px solid var(--royal-gold);
+    }
+
+    .auth-form {
+      padding: 2rem;
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .checkbox-group input {
+      width: auto;
+      margin-right: 0.5rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background-color: var(--royal-gold);
+      color: var(--deep-maroon);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--soft-gold);
+    }
+
+    .btn-google {
+      background-color: white;
+      color: var(--charcoal-grey);
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-google:hover {
+      background-color: #f5f5f5;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: #777;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .divider span {
+      padding: 0 1rem;
+    }
+
+    .forgot-password {
+      display: block;
+      text-align: right;
+      margin-top: 0.5rem;
+      color: var(--teal-green);
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .worker-fields {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed #ddd;
+      display: none;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .success-message h3 {
+      color: var(--deep-maroon);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .success-message p {
+      margin-bottom: 2rem;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      color: var(--teal-green);
+      margin-bottom: 1rem;
+    }
+
+    .error-message {
+      color: #d9534f;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .auth-container {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-header">
+      <img src="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg" alt="CiraSari Logo">
+      <h2>CiraSari</h2>
+      <p>Preserving the heritage of Indian sarees</p>
+    </div>
+
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="loginTab">Login</div>
+      <div class="auth-tab" id="registerTab">Register</div>
+    </div>
+
+    <!-- Login Form -->
+    <form class="auth-form active" id="loginForm">
+      <div class="form-group">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required>
+        <a href="#" class="forgot-password">Forgot password?</a>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Login</button>
+      
+      <div class="divider">
+        <span>or</span>
+      </div>
+      
+      <button type="button" class="btn btn-google">
+        <i class="fab fa-google"></i> Continue with Google
+      </button>
+      
+      <p class="auth-footer" style="text-align: center; margin-top: 1rem;">
+        Don't have an account? <a href="#" id="showRegister">Register here</a>
+      </p>
+    </form>
+
+    <!-- Registration Form -->
+    <form class="auth-form" id="registerForm">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="registerEmail">Email Address</label>
+        <input type="email" id="registerEmail" required>
+        <div class="error-message" id="emailError">Email already registered</div>
+      </div>
+      
+      <div class="form-group">
+        <label for="registerPassword">Password (min 6 characters)</label>
+        <input type="password" id="registerPassword" minlength="6" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" required>
+        <div class="error-message" id="passwordError">Passwords do not match</div>
+      </div>
+
+      <div class="form-group">
+        <label for="pNo">Phone Number</label>
+        <input type="tel" id="pNo" pattern="[0-9]{10}" required>
+      </div>
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="isWorker">
+        <label for="isWorker">Are you a technician in the saree industry?</label>
+      </div>
+      
+      <div class="worker-fields" id="workerFields">
+        <div class="form-group">
+          <label for="sector">Sector</label>
+          <select id="sector" required>
+            <option value="">Select Sector</option>
+            <option value="handloom">Handloom</option>
+            <option value="powerloom">Powerloom</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="category">Specialization</label>
+          <select id="category" required>
+            <option value="">Select Specialization</option>
+            <option value="harness_work">Harness Work</option>
+            <option value="helpers">Helpers</option>
+            <option value="loom">Loom</option>
+            <option value="jacquard">Jacquard</option>
+            <option value="master_weaver">Master Weaver</option>
+            <option value="mounting">Mounting</option>
+            <option value="denting">Denting</option>
+            <option value="other">Other Technicians</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="experience">Years of Experience</label>
+          <input type="number" id="experience" min="0" max="50" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea id="address" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="skills">Skills (comma separated)</label>
+          <input type="text" id="skills" placeholder="e.g., weaving, dyeing, pattern making">
+        </div>
+        
+        <div class="form-group">
+          <label for="about">About Your Work</label>
+          <textarea id="about" placeholder="Describe your experience and expertise"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="profileImage">Profile Image</label>
+          <input type="file" id="profileImage" accept="image/*">
+          <small>Upload a clear photo of yourself (optional)</small>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Register</button>
+      
+      <div class="divider">
+        <span>or</span>
+      </div>
+      
+      <button type="button" class="btn btn-google">
+        <i class="fab fa-google"></i> Continue with Google
+      </button>
+      
+      <p class="auth-footer" style="text-align: center; margin-top: 1rem;">
+        Already have an account? <a href="#" id="showLogin">Login here</a>
+      </p>
+    </form>
+
+    <!-- Login Success Message -->
+    <div class="success-message" id="loginSuccess">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Login Successful!</h3>
+      <p>Welcome back to CiraSari. You're now ready to explore our collection of traditional sarees.</p>
+      <button class="btn btn-primary" id="goHomeFromLogin">Go to Home Page</button>
+    </div>
+
+    <!-- Registration Success Message -->
+    <div class="success-message" id="registerSuccess">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3>Registration Successful!</h3>
+      <p id="successMessage">Thank you for joining CiraSari. Your account has been created successfully.</p>
+      <button class="btn btn-primary" id="goHomeFromRegister">Go to Home Page</button>
+      <button class="btn btn-outline" id="goToTechnicians" style="display: none;">View Technician Profile</button>
+    </div>
+  </div>
+
+  <script>
+    // Helper function to convert image to Base64
+    function convertToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Check if email already exists
+    function isEmailRegistered(email) {
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const technicians = JSON.parse(localStorage.getItem('technicians')) || [];
+      return [...users, ...technicians].some(user => user.email === email);
+    }
+
+    // Tab switching functionality
+    document.getElementById('loginTab').addEventListener('click', function() {
+      switchToLogin();
+    });
+
+    document.getElementById('registerTab').addEventListener('click', function() {
+      switchToRegister();
+    });
+
+    document.getElementById('showRegister').addEventListener('click', function(e) {
+      e.preventDefault();
+      switchToRegister();
+    });
+
+    document.getElementById('showLogin').addEventListener('click', function(e) {
+      e.preventDefault();
+      switchToLogin();
+    });
+
+    function switchToLogin() {
+      document.getElementById('loginTab').classList.add('active');
+      document.getElementById('registerTab').classList.remove('active');
+      document.getElementById('loginForm').classList.add('active');
+      document.getElementById('registerForm').classList.remove('active');
+      document.getElementById('loginSuccess').style.display = 'none';
+      document.getElementById('registerSuccess').style.display = 'none';
+    }
+
+    function switchToRegister() {
+      document.getElementById('registerTab').classList.add('active');
+      document.getElementById('loginTab').classList.remove('active');
+      document.getElementById('registerForm').classList.add('active');
+      document.getElementById('loginForm').classList.remove('active');
+      document.getElementById('loginSuccess').style.display = 'none';
+      document.getElementById('registerSuccess').style.display = 'none';
+    }
+
+    // Show/hide technician fields
+    document.getElementById('isWorker').addEventListener('change', function() {
+      const workerFields = document.getElementById('workerFields');
+      workerFields.style.display = this.checked ? 'block' : 'none';
+      
+      // Make technician-specific fields required if checked
+      const techFields = workerFields.querySelectorAll('[required]');
+      techFields.forEach(field => {
+        field.required = this.checked;
+      });
+    });
+
+    // Password confirmation validation
+    document.getElementById('confirmPassword').addEventListener('input', function() {
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = this.value;
+      const errorElement = document.getElementById('passwordError');
+      
+      if (confirmPassword && password !== confirmPassword) {
+        errorElement.style.display = 'block';
+      } else {
+        errorElement.style.display = 'none';
+      }
+    });
+
+    // Email availability check
+    document.getElementById('registerEmail').addEventListener('blur', function() {
+      if (isEmailRegistered(this.value)) {
+        document.getElementById('emailError').style.display = 'block';
+      } else {
+        document.getElementById('emailError').style.display = 'none';
+      }
+    });
+
+    // Form submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Here you would typically send this data to your backend
+      console.log('Login attempt with:', { email, password });
+      
+      // Show success message
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('loginSuccess').style.display = 'block';
+      
+      // Store login state
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', email);
+    });
+    
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validate passwords match
+      if (password !== confirmPassword) {
+        document.getElementById('passwordError').style.display = 'block';
+        return;
+      }
+      
+      // Check if email is already registered
+      if (isEmailRegistered(email)) {
+        document.getElementById('emailError').style.display = 'block';
+        return;
+      }
+    
+      const formData = {
+        name: document.getElementById('fullName').value,
+        email: email,
+        phone: document.getElementById('pNo').value,
+        password: password, // Note: In production, you should NEVER store plain text passwords
+        isWorker: document.getElementById('isWorker').checked
+      };
+    
+      // Save basic user info
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      users.push(formData);
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      // If technician, create complete profile
+      if (formData.isWorker) {
+        const imageFile = document.getElementById('profileImage').files[0];
+        let imageUrl = '../Image/profiles.png';
+        
+        if (imageFile) {
+          try {
+            imageUrl = await convertToBase64(imageFile);
+          } catch (error) {
+            console.error('Error converting image:', error);
+          }
+        }
+        
+        const technician = {
+          id: 'tech_' + Date.now(), // Unique ID with prefix
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          specialty: document.getElementById('sector').value,
+          category: document.getElementById('category').value,
+          image: imageUrl,
+          location: document.getElementById('address').value,
+          rating: '★★★★☆', // Default rating
+          experience: document.getElementById('experience').value + ' years',
+          skills: document.getElementById('skills').value 
+            ? document.getElementById('skills').value.split(',').map(s => s.trim())
+            : [document.getElementById('category').value.replace('_', ' ')],
+          about: document.getElementById('about').value || 
+            `Experienced ${document.getElementById('category').value.replace('_', ' ')} with ${document.getElementById('experience').value} years in the industry`,
+          registeredAt: new Date().toISOString()
+        };
+    
+        // Save technician to localStorage
+        let technicians = JSON.parse(localStorage.getItem('technicians')) || [];
+        technicians.push(technician);
+        localStorage.setItem('technicians', JSON.stringify(technicians));
+        
+        // Set success message for technician
+        document.getElementById('successMessage').textContent = 
+          'Thank you for registering as a technician! Your profile is now visible in our technicians directory.';
+        document.getElementById('goToTechnicians').style.display = 'block';
+      }
+      
+      // Show success message
+      document.getElementById('registerForm').style.display = 'none';
+      document.getElementById('registerSuccess').style.display = 'block';
+      
+      // Store login state
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', email);
+    });
+
+    // Navigation handlers
+    document.getElementById('goHomeFromLogin').addEventListener('click', function() {
+      window.location.href = '../index.html';
+    });
+
+    document.getElementById('goHomeFromRegister').addEventListener('click', function() {
+      window.location.href = '../index.html';
+    });
+
+    document.getElementById('goToTechnicians').addEventListener('click', function() {
+      window.location.href = 'technicians.html';
+    });
+
+    // Initialize form
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if coming from registration with technician flag
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('tech') === 'true') {
+        document.getElementById('isWorker').checked = true;
+        document.getElementById('workerFields').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

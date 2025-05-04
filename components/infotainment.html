@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saree Heritage - Community Hub</title>
+  <link rel="icon" type="image/x-icon" href="./logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --deep-maroon: #800020;
+      --royal-gold: #D4AF37;
+      --ivory: #F8F1F1;
+      --teal-green: #008080;
+      --soft-peach: #FDD5B1;
+      --charcoal-grey: #333333;
+      --soft-gold: #E8C872;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: var(--ivory);
+      color: var(--charcoal-grey);
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation */
+    header {
+      background-color: var(--deep-maroon);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 55px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      color: var(--royal-gold);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      color: var(--royal-gold);
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .user-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background-color: var(--royal-gold);
+      color: var(--deep-maroon);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--royal-gold);
+      color: var(--royal-gold);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Community Hub Styles */
+    .community-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      color: var(--deep-maroon);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      color: var(--charcoal-grey);
+      font-size: 1.2rem;
+    }
+
+    /* Post Form */
+    .post-form {
+      background-color: white;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-bottom: 3rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--deep-maroon);
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .media-upload {
+      margin-top: 1rem;
+    }
+
+    .media-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .media-preview-item {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .media-preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .remove-media {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Posts Feed */
+    .posts-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .post-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .post-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--soft-peach);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-maroon);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .author-info h3 {
+      color: var(--deep-maroon);
+      margin-bottom: 0.2rem;
+    }
+
+    .author-info p {
+      color: var(--charcoal-grey);
+      font-size: 0.9rem;
+    }
+
+    .post-date {
+      color: var(--charcoal-grey);
+      font-size: 0.9rem;
+    }
+
+    .post-content {
+      padding: 1.5rem;
+    }
+
+    .post-title {
+      color: var(--deep-maroon);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .post-text {
+      color: var(--charcoal-grey);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .post-media {
+      margin: 1.5rem 0;
+    }
+
+    .post-media img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+
+    /* Post Actions */
+    .post-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #eee;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--charcoal-grey);
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+
+    .action-btn:hover {
+      color: var(--deep-maroon);
+    }
+
+    .action-btn i {
+      font-size: 1.2rem;
+    }
+
+    /* Comments Section */
+    .comments-section {
+      padding: 0 1.5rem 1.5rem;
+      display: none;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .comment-input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .comments-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .comment {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .comment-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--soft-peach);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-maroon);
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .comment-content {
+      flex: 1;
+    }
+
+    .comment-author {
+      color: var(--deep-maroon);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .comment-text {
+      color: var(--charcoal-grey);
+      margin-bottom: 0.5rem;
+    }
+
+    .comment-date {
+      color: #999;
+      font-size: 0.8rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      nav ul {
+        margin: 1rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .community-container {
+        padding: 0 1rem;
+      }
+
+      .post-form {
+        padding: 1.5rem;
+      }
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: none;
+      color: var(--charcoal-grey);
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      transition: color 0.3s;
+    }
+    
+    .share-btn:hover {
+      color: var(--teal-green);
+    }
+    
+    .share-options {
+      display: none;
+      position: absolute;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      padding: 1rem;
+      z-index: 10;
+      width: 200px;
+      margin-top: 10px;
+    }
+    
+    .share-options a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      color: var(--charcoal-grey);
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    
+    .share-options a:hover {
+      background-color: var(--ivory);
+    }
+    
+    .share-container {
+      position: relative;
+    }
+    
+    .share-options.show {
+      display: block;
+    }
+    
+    /* Add to existing .action-buttons */
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--deep-maroon);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Navigation -->
+  <header>
+    <div class="logo">
+      <a href="#">
+        <img src="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg" alt="logo">
+      </a>
+      <a href="#" style="text-decoration: none;">
+        <h1>Cira Sari</h1>
+      </a>
+    </div>  
+        
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="./sareeMaking.html">Saree Making</a></li>
+        <li><a href="../index.html#servSec">Services</a></li>
+        <li><a href="./collections.html">Collections</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./setting.html" class="active">Setting</a></li>
+      </ul>
+    </nav>
+
+    <div class="user-actions">
+      <a href="./signin.html">
+        <button class="btn btn-outline">Sign In</button>
+      </a>
+    </div>
+  </header>
+
+  <!-- Community Hub Content -->
+  <div class="community-container">
+    <div class="page-header">
+      <h1>Community Hub</h1>
+      <p>Connect with fellow saree enthusiasts, share your creations, and discuss traditional weaving techniques.</p>
+    </div>
+
+    <!-- Post Form -->
+    <form class="post-form" id="postForm">
+      <div class="form-group">
+        <label for="postTitle">Post Title</label>
+        <input type="text" id="postTitle" placeholder="What's your post about?" required>
+      </div>
+      <div class="form-group">
+        <label for="postContent">Share Your Thoughts</label>
+        <textarea id="postContent" placeholder="Write something about sarees, weaving techniques, or your latest creation..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="postImage">Add Image (Optional)</label>
+        <input type="file" id="postImage" accept="image/*" class="media-upload">
+        <div class="media-preview" id="mediaPreview"></div>
+      </div>
+      <button type="submit" class="btn btn-primary">Post to Community</button>
+    </form>
+
+    <!-- Posts Feed -->
+    <div class="posts-feed" id="postsFeed">
+      <!-- Posts will be loaded from JSON -->
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Global variable to store posts
+    let postData = [];
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load posts from API
+      loadPostsFromAPI();
+      
+      // Set up form submission
+      const postForm = document.getElementById('postForm');
+      postForm.addEventListener('submit', handlePostSubmit);
+      
+      // Set up image preview
+      const postImageInput = document.getElementById('postImage');
+      const mediaPreview = document.getElementById('mediaPreview');
+      
+      postImageInput.addEventListener('change', function(e) {
+        mediaPreview.innerHTML = '';
+        if (e.target.files.length > 0) {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          
+          reader.onload = function(event) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'media-preview-item';
+            previewItem.innerHTML = `
+              <img src="${event.target.result}" alt="Preview">
+              <button class="remove-media" type="button">&times;</button>
+            `;
+            mediaPreview.appendChild(previewItem);
+            
+            // Add remove functionality
+            previewItem.querySelector('.remove-media').addEventListener('click', function() {
+              mediaPreview.removeChild(previewItem);
+              postImageInput.value = '';
+            });
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+    
+    function loadPostsFromAPI() {
+      const postsFeed = document.getElementById('postsFeed');
+      postsFeed.innerHTML = '<div class="post-card" style="text-align: center; padding: 2rem;"><h3>Loading posts...</h3></div>';
+      
+      fetch('http://localhost:5000/api/posts')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          postData = data;
+          console.log('Community posts loaded:', postData);
+          renderPosts(data);
+        })
+        .catch(error => {
+          console.error('Error fetching posts:', error);
+          showErrorUI();
+        });
+    }
+    
+    function renderPosts(posts) {
+      const postsFeed = document.getElementById('postsFeed');
+      postsFeed.innerHTML = '';
+      
+      if (!posts || posts.length === 0) {
+        postsFeed.innerHTML = `
+          <div class="post-card" style="text-align: center; padding: 2rem;">
+            <h3>No posts yet</h3>
+            <p>Be the first to share something with the community!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Render all posts
+      posts.forEach(post => {
+        renderPost(post);
+      });
+    }
+    
+    function renderPost(post) {
+      const postsFeed = document.getElementById('postsFeed');
+      
+      const postElement = document.createElement('div');
+      postElement.className = 'post-card';
+      postElement.dataset.postId = post.id;
+      
+      // Handle the API response structure
+      const authorInitial = post.name ? post.name.charAt(0).toUpperCase() : 'U';
+      const authorName = post.name || 'Unknown';
+      const authorRole = post.designation || 'Community Member';
+      const postTitle = post.title || 'Untitled Post';
+      const postContent = post.description || 'No content';
+      const postImage = post.image || '';
+      const postComments = post.comments || [];
+      
+      postElement.innerHTML = `
+        <div class="post-header">
+          <div class="post-author">
+            <div class="author-avatar">${authorInitial}</div>
+            <div class="author-info">
+              <h3>${authorName}</h3>
+              <p>${authorRole}</p>
+            </div>
+          </div>
+          <div class="post-date">${formatTime(post.time || new Date().toISOString())}</div>
+        </div>
+        <div class="post-content">
+          <h3 class="post-title">${postTitle}</h3>
+          <p class="post-text">${postContent}</p>
+          ${postImage ? `<div class="post-media"><img src="${postImage}" alt="Post image"></div>` : ''}
+        </div>
+        <div class="post-actions">
+          <div class="action-buttons">
+            <button class="action-btn comment-btn">
+              <i class="fas fa-comment"></i>
+              <span>Comment</span>
+            </button>
+            <div class="share-container" style="position: relative;">
+              <button class="action-btn share-btn">
+                <i class="fas fa-share-alt"></i>
+                <span>Share</span>
+              </button>
+              <div class="share-options" style="right: 0; left: auto;">
+                <a href="#" class="share-option" data-platform="facebook">
+                  <i class="fab fa-facebook"></i> Facebook
+                </a>
+                <a href="#" class="share-option" data-platform="whatsapp">
+                  <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="#" class="share-option" data-platform="copy">
+                  <i class="fas fa-copy"></i> Copy Link
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comments-section" style="display: none;">
+          <div class="comment-form">
+            <input type="text" class="comment-input" placeholder="Write a comment...">
+            <button class="btn btn-primary post-comment-btn">Post</button>
+          </div>
+          <div class="comments-list"></div>
+        </div>
+      `;
+      
+      // Add event listeners
+      const commentBtn = postElement.querySelector('.comment-btn');
+      const commentsSection = postElement.querySelector('.comments-section');
+      commentBtn.addEventListener('click', () => {
+        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+        if (commentsSection.style.display === 'block') {
+          renderComments(postElement, post);
+        }
+      });
+      
+      const postCommentBtn = postElement.querySelector('.post-comment-btn');
+      const commentInput = postElement.querySelector('.comment-input');
+      postCommentBtn.addEventListener('click', () => {
+        addComment(postElement, post.id, commentInput.value.trim(), "You");
+        commentInput.value = '';
+      });
+      
+      const shareBtn = postElement.querySelector('.share-btn');
+      const shareOptions = postElement.querySelector('.share-options');
+      shareBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        shareOptions.classList.toggle('show');
+      });
+      
+      document.addEventListener('click', () => shareOptions.classList.remove('show'));
+      setupShareOptions(postElement, post);
+      
+      // Add to the beginning of the feed
+      postsFeed.insertBefore(postElement, postsFeed.firstChild);
+    }
+    
+    function showErrorUI() {
+      const postsFeed = document.getElementById('postsFeed');
+      postsFeed.innerHTML = `
+        <div class="post-card" style="text-align: center; padding: 2rem;">
+          <h3>Could not load community posts</h3>
+          <p>Please try refreshing the page or check back later.</p>
+        </div>
+      `;
+    }
+    
+    function handlePostSubmit(e) {
+      e.preventDefault();
+      
+      const title = document.getElementById('postTitle').value.trim();
+      const content = document.getElementById('postContent').value.trim();
+      const imageInput = document.getElementById('postImage');
+      
+      if (!title || !content) {
+        showToast('Please fill in both title and content');
+        return;
+      }
+    
+      const newPost = {
+        id: Date.now(),
+        letter: "Y",
+        name: "You",
+        designation: "Community Member",
+        time: new Date().toISOString(),
+        title: title,
+        description: content,
+        image: "",
+        comments: []
+      };
+      
+      if (imageInput.files.length > 0) {
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          newPost.image = event.target.result;
+          addPostToAPI(newPost);
+          addPostToUI(newPost);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        addPostToAPI(newPost);
+        addPostToUI(newPost);
+      }
+    }
+    
+    function addPostToAPI(post) {
+      // In a real implementation, you would send this to your API
+      // For now, we'll just add it to our local postData array
+      postData.unshift(post);
+      
+      // Clear form
+      document.getElementById('postForm').reset();
+      document.getElementById('mediaPreview').innerHTML = '';
+      showToast('Post shared successfully!');
+    }
+    
+    function addPostToUI(post) {
+      renderPost(post);
+    }
+    
+    function renderComments(postElement, postData) {
+      const commentsList = postElement.querySelector('.comments-list');
+      commentsList.innerHTML = '';
+      
+      if (postData.comments && postData.comments.length > 0) {
+        postData.comments.forEach(comment => {
+          const commentElement = document.createElement('div');
+          commentElement.className = 'comment';
+          commentElement.innerHTML = `
+            <div class="comment-avatar">${comment.user ? comment.user.charAt(0).toUpperCase() : 'U'}</div>
+            <div class="comment-content">
+              <div class="comment-author">${comment.user || 'Unknown'}</div>
+              <div class="comment-text">${comment.text}</div>
+              <div class="comment-date">Recently</div>
+            </div>
+          `;
+          commentsList.appendChild(commentElement);
+        });
+      }
+    }
+    
+    function addComment(postElement, postId, commentText, author) {
+      if (!commentText) return;
+      
+      const newComment = {
+        user: author,
+        text: commentText,
+        time: new Date().toISOString()
+      };
+      
+      // Find the post in our local data
+      const postIndex = postData.findIndex(post => post.id === postId);
+      if (postIndex !== -1) {
+        if (!postData[postIndex].comments) {
+          postData[postIndex].comments = [];
+        }
+        postData[postIndex].comments.unshift(newComment);
+        
+        // Update the UI
+        const commentsList = postElement.querySelector('.comments-list');
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `
+          <div class="comment-avatar">${author.charAt(0).toUpperCase()}</div>
+          <div class="comment-content">
+            <div class="comment-author">${author}</div>
+            <div class="comment-text">${commentText}</div>
+            <div class="comment-date">Just now</div>
+          </div>
+        `;
+        commentsList.insertBefore(commentElement, commentsList.firstChild);
+        showToast('Comment added!');
+      }
+    }
+    
+    function setupShareOptions(postElement, postData) {
+      const shareOptions = postElement.querySelectorAll('.share-option');
+      const shareUrl = `${window.location.origin}${window.location.pathname}?post=${postData.id}`;
+      const shareText = `Check out this post by ${postData.name || 'a community member'}: "${postData.title || 'Untitled post'}"`;
+      
+      shareOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+          e.preventDefault();
+          const platform = this.dataset.platform;
+          
+          switch(platform) {
+            case 'facebook':
+              shareToFacebook(shareUrl, shareText);
+              break;
+            case 'whatsapp':
+              shareToWhatsApp(shareUrl, shareText);
+              break;
+            case 'copy':
+              copyToClipboard(shareUrl);
+              break;
+          }
+          
+          this.closest('.share-options').classList.remove('show');
+        });
+      });
+    }
+    
+    // Utility functions
+    function formatTime(time) {
+      if (typeof time === 'string') {
+        if (time.includes('ago') || time === 'Just now' || time === 'Recently') {
+          return time;
+        }
+        
+        try {
+          const now = new Date();
+          const postDate = new Date(time);
+          const diffInSeconds = Math.floor((now - postDate) / 1000);
+          
+          if (diffInSeconds < 60) return 'Just now';
+          if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+          if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+          return `${Math.floor(diffInSeconds / 86400)} days ago`;
+        } catch (e) {
+          return time;
+        }
+      }
+      return time;
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    function shareToFacebook(url, text) {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+      showToast('Shared to Facebook!');
+    }
+    
+    function shareToWhatsApp(url, text) {
+      window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, '_blank');
+      showToast('Shared to WhatsApp!');
+    }
+    
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Link copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        // Fallback
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast('Link copied to clipboard!');
+      });
+    }
+  </script>
+  
+</body>
+</html>

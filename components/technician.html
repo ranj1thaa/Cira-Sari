@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technicians - Saree Heritage</title>
+  <link rel="icon" type="image/x-icon" href="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --deep-maroon: #800020;
+      --royal-gold: #D4AF37;
+      --ivory: #F8F1F1;
+      --teal-green: #008080;
+      --soft-peach: #FDD5B1;
+      --charcoal-grey: #333333;
+      --soft-gold: #E8C872;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: var(--ivory);
+      color: var(--charcoal-grey);
+      line-height: 1.6;
+    }
+
+    /* Header - Matching your existing style */
+    header {
+      background-color: var(--deep-maroon);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 55px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      color: var(--royal-gold);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      color: var(--royal-gold);
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .user-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.5rem 1.5rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background-color: var(--royal-gold);
+      color: var(--deep-maroon);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--royal-gold);
+      color: var(--royal-gold);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      color: var(--deep-maroon);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      color: var(--charcoal-grey);
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Search and Filter */
+    .search-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .search-bar {
+      flex: 1;
+      min-width: 300px;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 3rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+    }
+
+    .search-bar i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--charcoal-grey);
+    }
+
+    .category-filter {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .category-btn {
+      padding: 0.5rem 1rem;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .category-btn:hover,
+     .category-btn.active {
+      background-color: var(--deep-maroon);
+      color: white;
+      border-color: var(--deep-maroon);
+    }
+
+    /* Technicians Grid */
+    .technicians-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .technician-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .technician-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .technician-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .technician-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .technician-card:hover .technician-image img {
+      transform: scale(1.1);
+    }
+
+    .technician-info {
+      padding: 1.5rem;
+    }
+
+    .technician-name {
+      color: var(--deep-maroon);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .technician-specialty {
+      color: var(--royal-gold);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      background-color: rgba(212, 175, 55, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .technician-location {
+      color: var(--charcoal-grey);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .technician-rating {
+      color: var(--royal-gold);
+      margin-bottom: 1rem;
+    }
+
+    .technician-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-tag {
+      background-color: var(--soft-peach);
+      color: var(--deep-maroon);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .view-profile {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background-color: var(--deep-maroon);
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .view-profile:hover {
+      background-color: var(--royal-gold);
+    }
+
+    /* Technician Modal */
+    
+  /* Technician Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: modalFadeIn 0.3s;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh; /* Limit height to viewport */
+}
+
+.modal-body {
+  padding: 2rem;
+  overflow-y: auto; /* Make body content scrollable */
+  flex: 1; /* Take up available space */
+}
+.modal-body {
+  scroll-behavior: smooth;
+}
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-header {
+      position: relative;
+    }
+
+    .modal-image {
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .modal-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .modal-title {
+      color: var(--deep-maroon);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-subtitle {
+      color: var(--royal-gold);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+
+    .modal-section h3 {
+      color: var(--deep-maroon);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .modal-section h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--royal-gold);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--soft-peach);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--deep-maroon);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem 2rem;
+      border-top: 1px solid #eee;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      nav ul {
+        margin: 1rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .search-container {
+        flex-direction: column;
+      }
+
+      .modal-content {
+        width: 95%;
+        margin: 1rem auto;
+      }
+
+      .modal-image {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Navigation -->
+  <header>
+    <div class="logo">
+      <a href="#">
+        <img src="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg" alt="logo">
+      </a>
+      <a href="#" style="text-decoration: none;">
+        <h1>Cira Sari</h1>
+      </a>
+    </div>  
+        
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="./sareeMaking.html">Saree Making</a></li>
+        <li><a href="../index.html#servSec" class="active">Services</a></li>
+        <li><a href="./collections.html">Collections</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./setting.html">Setting</a></li>
+      </ul>
+    </nav>
+
+    <div class="user-actions">
+      <a href="./signin.html">
+        <button class="btn btn-outline">Sign In</button>
+      </a>
+      
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="page-header">
+      <h1>Find Skilled Technicians</h1>
+      <p>Connect with experienced saree weaving professionals across various specialties</p>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="search-container">
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search technicians by name or skill...">
+      </div>
+      <div class="category-filter">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="harness">Harness Work</button>
+        <button class="category-btn" data-category="helper">Helpers</button>
+        <button class="category-btn" data-category="loom">Loom</button>
+        <button class="category-btn" data-category="jacquard">Jacquard</button>
+        <button class="category-btn" data-category="master">Master Weaver</button>
+        <button class="category-btn" data-category="mounting">Mounting</button>
+        <button class="category-btn" data-category="denting">Denting</button>
+        <button class="category-btn" data-category="other">Other Technicians</button>
+      </div>
+    </div>
+
+    <!-- Technicians Grid -->
+    <div class="technicians-grid" id="techniciansGrid">
+      <!-- Technician cards will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <!-- Technician Modal -->
+  <div class="modal" id="technicianModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-image">
+          <img id="modalTechImage" src="" alt="Technician">
+        </div>
+        <div class="close-modal" onclick="closeModal()">&times;</div>
+      </div>
+      <div class="modal-body">
+        <h1 class="modal-title" id="modalTechName"></h1>
+        <h2 class="modal-subtitle" id="modalTechSpecialty"></h2>
+        
+        <div class="modal-section">
+          <h3>About</h3>
+          <p id="modalTechAbout"></p>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Skills</h3>
+          <div class="technician-skills" id="modalTechSkills"></div>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Experience</h3>
+          <p id="modalTechExperience"></p>
+        </div>
+        
+        <div class="modal-section">
+          <h3>Contact Information</h3>
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <span id="modalTechPhone"></span>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <span id="modalTechEmail"></span>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <span id="modalTechLocation"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+<script>
+  // DOM Elements
+  const techniciansGrid = document.getElementById('techniciansGrid');
+  const searchInput = document.getElementById('searchInput');
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const modal = document.getElementById('technicianModal');
+  let techniciansData = [];
+
+  // Display technicians in grid
+  function displayTechnicians(techs) {
+    techniciansGrid.innerHTML = '';
+    
+    if (techs.length === 0) {
+      techniciansGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;">No technicians found matching your criteria.</p>';
+      return;
+    }
+    
+    techs.forEach(tech => {
+      // Normalize the category for display
+      const displayCategory = tech.category ? tech.category.replace(/_/g, ' ') : 'Saree Technician';
+      
+      const card = document.createElement('div');
+      card.className = 'technician-card';
+      card.innerHTML = `
+        <div class="technician-image">
+          <img src="${tech.image || '../Image/profiles.png'}" alt="${tech.name}" onerror="this.src='../Image/profiles.png'">
+        </div>
+        <div class="technician-info">
+          <h3 class="technician-name">${tech.name || 'Unknown Technician'}</h3>
+          <span class="technician-specialty">${tech.specialty || displayCategory}</span>
+          <p class="technician-location"><i class="fas fa-map-marker-alt"></i> ${tech.location || 'Location not specified'}</p>
+          <p class="technician-rating">${tech.rating || '★★★★☆'} (${tech.experience || 'Experience not specified'})</p>
+          <div class="technician-skills">
+            ${(tech.skills || [displayCategory]).map(skill => 
+              `<span class="skill-tag">${skill.replace(/_/g, ' ')}</span>`).join('')}
+          </div>
+          <a href="#" class="view-profile" data-id="${tech.id || tech._id || 'local-'+tech.email}">View Profile</a>
+        </div>
+      `;
+      
+      techniciansGrid.appendChild(card);
+    });
+
+    // Add event listeners to view profile buttons
+    document.querySelectorAll('.view-profile').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const techId = this.getAttribute('data-id');
+        const technician = techniciansData.find(t => 
+          (t.id === techId) || (t._id === techId) || ('local-'+t.email === techId));
+        
+        if (technician) {
+          openModal(technician);
+        } else {
+          alert('Technician details could not be loaded. Please try again.');
+        }
+      });
+    });
+  }
+
+  // Open modal with technician details
+  function openModal(tech) {
+    // Set image with error fallback
+    const modalImage = document.getElementById('modalTechImage');
+    modalImage.src = tech.image || '../Image/profiles.png';
+    modalImage.onerror = function() {
+      this.src = '../Image/profiles.png';
+    };
+    
+    // Normalize category for display
+    const displayCategory = tech.category ? tech.category.replace(/_/g, ' ') : 'Saree Technician';
+    
+    // Set other fields
+    document.getElementById('modalTechName').textContent = tech.name || 'Name not provided';
+    document.getElementById('modalTechSpecialty').textContent = tech.specialty || displayCategory;
+    document.getElementById('modalTechAbout').textContent = tech.about || 
+      `Experienced ${displayCategory} with ${tech.experience || 'several years'} of experience.`;
+    document.getElementById('modalTechExperience').textContent = tech.experience || 'Experience not specified';
+    document.getElementById('modalTechPhone').textContent = tech.phone || 'Phone not provided';
+    document.getElementById('modalTechEmail').textContent = tech.email || 'Email not provided';
+    document.getElementById('modalTechLocation').textContent = tech.location || 'Location not specified';
+    
+    // Handle skills display
+    const skillsContainer = document.getElementById('modalTechSkills');
+    skillsContainer.innerHTML = '';
+    const skills = tech.skills || [displayCategory];
+    skills.forEach(skill => {
+      const skillTag = document.createElement('span');
+      skillTag.className = 'skill-tag';
+      skillTag.textContent = skill.replace(/_/g, ' ');
+      skillsContainer.appendChild(skillTag);
+    });
+    
+    // Show modal
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Close modal
+  function closeModal() {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+
+  // Close modal when clicking outside
+  window.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Search functionality
+  searchInput.addEventListener('input', function() {
+    filterTechnicians();
+  });
+
+  // Category filter
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      categoryBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      filterTechnicians();
+    });
+  });
+
+  // Combined filter function
+  function filterTechnicians() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+    
+    const filtered = techniciansData.filter(tech => {
+      // Normalize category for matching
+      const techCategory = tech.category ? tech.category.replace(/_/g, ' ') : '';
+      
+      // Search across multiple fields
+      const matchesSearch = 
+        (tech.name && tech.name.toLowerCase().includes(searchTerm)) ||
+        (tech.skills && tech.skills.some(skill => 
+          skill.toLowerCase().includes(searchTerm))) ||
+        (techCategory && techCategory.toLowerCase().includes(searchTerm)) ||
+        (tech.specialty && tech.specialty.toLowerCase().includes(searchTerm)) ||
+        (tech.about && tech.about.toLowerCase().includes(searchTerm));
+      
+      // Handle category matching
+      let matchesCategory = true;
+      if (activeCategory !== 'all') {
+        matchesCategory = false;
+        
+        // Check if this tech matches the active category
+        if (techCategory && techCategory.toLowerCase() === activeCategory) {
+          matchesCategory = true;
+        }
+        
+        // Special case for "other" category
+        if (activeCategory === 'other' && 
+            techCategory && 
+            !['harness', 'helper', 'loom', 'jacquard', 'master', 'mounting', 'denting'].includes(techCategory.toLowerCase())) {
+          matchesCategory = true;
+        }
+      }
+      
+      return matchesSearch && matchesCategory;
+    });
+    
+    displayTechnicians(filtered);
+  }
+
+  // Fetch technicians from both backend and localStorage
+  async function fetchTechnicians() {
+    try {
+      // Try to fetch from backend first
+      const response = await fetch('http://localhost:5000/api/technicians');
+      if (response.ok) {
+        techniciansData = await response.json();
+      } else {
+        throw new Error('Backend fetch failed');
+      }
+    } catch (error) {
+      console.error('Using local storage data due to:', error);
+      techniciansData = [];
+    }
+    
+    // Always include local storage data
+    const localTechs = JSON.parse(localStorage.getItem('technicians')) || [];
+    
+    // Merge data ensuring no duplicates (by email)
+    const mergedTechs = [...techniciansData];
+    const existingEmails = new Set(techniciansData.map(t => t.email));
+    
+    localTechs.forEach(localTech => {
+      if (!existingEmails.has(localTech.email)) {
+        // Add ID for local technicians
+        localTech.id = 'local-' + localTech.email;
+        mergedTechs.push(localTech);
+      }
+    });
+    
+    techniciansData = mergedTechs;
+    displayTechnicians(techniciansData);
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', fetchTechnicians);
+</script>
+</body>
+</html>

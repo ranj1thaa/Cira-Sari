@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - CiraSari</title>
+  <link rel="icon" type="image/x-icon" href="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg">
+
+  <style>
+    :root {
+      --deep-maroon: #800020;
+      --royal-gold: #D4AF37;
+      --ivory: #F8F1F1;
+      --teal-green: #008080;
+      --soft-peach: #FDD5B1;
+      --charcoal-grey: #333333;
+      --soft-gold: #E8C872;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Playfair Display', serif;
+      background-color: var(--ivory);
+      color: var(--charcoal-grey);
+      line-height: 1.6;
+    }
+    
+    /* Header & Navigation */
+    header {
+      background-color: var(--deep-maroon);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      font-size: 18px;
+      z-index: 100;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .logo img{
+      width: 55px;
+      border-radius: 50%;
+      cursor: pointer;
+    }      
+    .logo h1 {
+      font-size: 1.8rem;
+      color: var(--royal-gold);
+      font-weight: 700;
+      text-decoration: none;
+    }            
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }      
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+    nav a:hover {
+      color: var(--royal-gold);
+      background-color: rgba(255,255,255,0.1);
+    }
+    .user-actions {
+      display: flex;
+      gap: 1rem;
+    }       
+    .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+    }    
+    .btn-primary {
+      background-color: var(--royal-gold);
+      color: var(--deep-maroon);
+      height:45px;
+    }
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--royal-gold);
+      color: var(--royal-gold);
+      height:45px;
+    }       
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .profile-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .profile-avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--royal-gold);
+    }
+
+    .profile-info h2 {
+      font-size: 2rem;
+      color: var(--deep-maroon);
+      margin-bottom: 0.5rem;
+    }
+
+    .profile-info p {
+      color: var(--charcoal-grey);
+      margin-bottom: 0.5rem;
+    }
+
+    .edit-btn {
+      margin-top: 1rem;
+    }
+
+    .profile-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .profile-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .profile-card h3 {
+      color: var(--deep-maroon);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--royal-gold);
+    }
+
+    .info-group {
+      margin-bottom: 1rem;
+    }
+
+    .info-group label {
+      display: block;
+      font-weight: 500;
+      color: var(--charcoal-grey);
+      margin-bottom: 0.25rem;
+    }
+
+    .info-group p {
+      padding: 0.5rem;
+      background-color: var(--ivory);
+      border-radius: 4px;
+    }
+
+    .worker-badge {
+      display: inline-block;
+      background-color: var(--royal-gold);
+      color: var(--deep-maroon);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+
+    footer {
+      background-color: var(--deep-maroon);
+      color: white;
+      padding: 3rem 2rem;
+      margin-top: 3rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h3 {
+      color: var(--royal-gold);
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-column a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column a:hover {
+      color: var(--royal-gold);
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .profile-sections {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      header {
+        flex-direction: column;
+        padding: 1rem;
+      }
+
+      nav ul {
+        margin: 1rem 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header with Navigation -->
+    <header>
+    <div class="logo">
+      <a href="#">
+        <img src="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg" alt="logo">
+      </a>
+      <a href="#" style="text-decoration: none;">
+        <h1>Cira Sari</h1>
+      </a>
+    </div>  
+        
+    <nav>
+      <ul>
+        <li><a href="../index.html" class="active">Home</a></li>
+        <li><a href="./sareeMaking.html">Saree Making</a></li>
+        <li><a href="../index.html#servSec">Services</a></li>
+        <li><a href="./collections.html">Collections</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./setting.html">Settings</a></li>
+      </ul>
+    </nav>
+
+    <div class="user-actions">
+      <a href="./signin.html">
+        <button class="btn btn-outline">Sign In</button>
+      </a>
+    </div>
+  </header>
+
+  <!-- Profile Content -->
+  <div class="profile-container">
+    <div class="profile-header">
+      <img src="../Image/p5.jpg" alt="Profile Picture" class="profile-avatar">
+      <div class="profile-info">
+        <h2 id="profileName">Ranjitha R</h2>
+        <p id="profileEmail">ranjitha@example.com</p>
+        <p>Member since: <span id="joinDate">January 2024</span></p>
+        <button class="btn btn-primary edit-btn">Edit Profile</button>
+      </div>
+    </div>
+
+    <div class="profile-sections">
+      <div class="profile-card">
+        <h3>Personal Information</h3>
+        <div class="info-group">
+          <label>Full Name</label>
+          <p id="fullName">Ranjitha R</p>
+        </div>
+        <div class="info-group">
+          <label>Email</label>
+          <p id="userEmail">ranjitha@example.com</p>
+        </div>
+        <div class="info-group">
+          <label>Account Type</label>
+          <p>Standard User <span class="worker-badge" id="workerBadge" style="display: none;">Worker</span></p>
+        </div>
+      </div>
+
+      <div class="profile-card" id="workerInfoCard" style="display: none;">
+        <h3>Worker Information</h3>
+        <div class="info-group">
+          <label>Sector</label>
+          <p id="workerSector">Handloom</p>
+        </div>
+        <div class="info-group">
+          <label>Category</label>
+          <p id="workerCategory">Master Weaver</p>
+        </div>
+        <div class="info-group">
+          <label>Experience</label>
+          <p id="workerExperience">12 years</p>
+        </div>
+        <div class="info-group">
+          <label>Address</label>
+          <p id="workerAddress">123 Weaver Street, Kanchipuram, Tamil Nadu - 631501</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="./contact.html">About Us</a></li>
+          <li><a href="./sareeMaking.html">Saree Making</a></li>
+        </ul>
+      </div>
+        
+      <div class="footer-column">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="./infotainment.html">Infotainment</a></li>
+          <li><a href="./technician.html">Technicians</a></li>
+          <li><a href="./collections.html">Saree Collections</a></li>
+        </ul>
+      </div>
+        
+      <div class="footer-column">
+        <h3>Account</h3>
+        <ul>
+          <li><a href="./profile.html">My Profile</a></li>
+          <li><a href="./setting.html">Settings</a></li>
+          <li><a href="./setting.html">Sign Out</a></li>
+        </ul>
+      </div>
+        
+      <div class="footer-column">
+        <h3>Connect With Us</h3>
+        <p>Email:<a href="mailto:info@cirasari.com">info@cirasari.com</a></p>
+        <p>Phone: +91 98765 43210</p>
+      </div>
+    </div>
+    
+    <div class="copyright">
+        <p>&copy; 2023 CiraSari. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // This would normally come from your backend/database
+    // For demo purposes, we'll use sample data
+    const userData = {
+      name: "Ranjitha R",
+      email: "ranjitha@example.com",
+      joinDate: "January 2024",
+      isWorker: true,
+      workerDetails: {
+        sector: "Handloom",
+        category: "Master Weaver",
+        experience: "12 years",
+        address: "123 Weaver Street, Kanchipuram, Tamil Nadu - 631501"
+      }
+    };
+
+    // Populate profile data
+    document.getElementById('profileName').textContent = userData.name;
+    document.getElementById('profileEmail').textContent = userData.email;
+    document.getElementById('userEmail').textContent = userData.email;
+    document.getElementById('fullName').textContent = userData.name;
+    document.getElementById('joinDate').textContent = userData.joinDate;
+
+    // Show worker info if applicable
+    if (userData.isWorker) {
+      document.getElementById('workerBadge').style.display = 'inline-block';
+      document.getElementById('workerInfoCard').style.display = 'block';
+      
+      // Populate worker data
+      document.getElementById('workerSector').textContent = userData.workerDetails.sector;
+      document.getElementById('workerCategory').textContent = userData.workerDetails.category;
+      document.getElementById('workerExperience').textContent = userData.workerDetails.experience;
+      document.getElementById('workerAddress').textContent = userData.workerDetails.address;
+    }
+
+    // Edit profile button functionality
+    document.querySelector('.edit-btn').addEventListener('click', function() {
+      alert('Edit profile functionality would open a form to update user details');
+      // In a real implementation, this would open a modal or redirect to an edit page
+    });
+
+    // Sign out button functionality
+    document.querySelector('.btn-outline').addEventListener('click', function() {
+      alert('User would be signed out and redirected to login page');
+      // In a real implementation, this would clear the session and redirect
+    });
+  </script>
+</body>
+</html>

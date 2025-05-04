@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart - Cira Sari</title>
+    <link rel="icon" type="image/x-icon" href="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg">
+
+    <style>
+      :root {
+        --deep-maroon: #800020;
+        --royal-gold: #D4AF37;
+        --ivory: #F8F1F1;
+        --teal-green: #008080;
+        --soft-peach: #FDD5B1;
+        --charcoal-grey: #333333;
+        --soft-gold: #E8C872;
+        --light-grey: #f5f5f5;
+        --white: #ffffff;
+        --cart-bg: #f9f3f0;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Playfair Display', serif;
+        background-color: var(--ivory);
+        color: var(--charcoal-grey);
+        line-height: 1.6;
+        font-size: 18px;
+      }
+      
+      /* Header & Navigation */
+      header {
+        background-color: var(--deep-maroon);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      
+      .logo img {
+        width: 55px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      
+      .logo h1 {
+        font-size: 1.8rem;
+        color: var(--royal-gold);
+        font-weight: 700;
+        text-decoration: none;
+      }
+      
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+      
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+      
+      nav a:hover {
+        color: var(--royal-gold);
+        background-color: rgba(255,255,255,0.1);
+      }
+      
+      .user-actions {
+        display: flex;
+        gap: 1rem;
+      }
+      
+      .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+      
+      .btn-primary {
+        background-color: var(--royal-gold);
+        color: var(--deep-maroon);
+        height: 45px;
+      }
+      
+      .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--royal-gold);
+        color: var(--royal-gold);
+        height: 45px;
+      }
+      
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      .cart-icon {
+        position: relative;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+      
+      .cart-count {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: var(--royal-gold);
+        color: var(--deep-maroon);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      
+      /* Main Cart Page Styles */
+      .cart-page {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+      
+      .cart-page-title {
+        font-size: 2rem;
+        color: var(--deep-maroon);
+        margin-bottom: 2rem;
+        text-align: center;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--royal-gold);
+      }
+      
+      .cart-container {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+      
+      .cart-items-section {
+        flex: 2;
+      }
+      
+      .cart-summary-section {
+        flex: 1;
+      }
+      
+      .cart-section-title {
+        font-size: 1.5rem;
+        color: var(--deep-maroon);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--royal-gold);
+      }
+      
+      .cart-item-card {
+        display: flex;
+        background-color: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+      }
+      
+      .cart-item-image {
+        width: 150px;
+      }
+      
+      .cart-item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+      .cart-item-content {
+        flex: 1;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .cart-item-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+      
+      .cart-item-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--charcoal-grey);
+      }
+      
+      .remove-item {
+        color: #f44336;
+        cursor: pointer;
+      }
+      
+      .cart-item-seller {
+        color: var(--teal-green);
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+      
+      .cart-item-price {
+        font-weight: bold;
+        color: var(--deep-maroon);
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+      
+      .cart-item-quantity {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+      
+      .quantity-label {
+        margin-right: 1rem;
+      }
+      
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+      }
+      
+      .quantity-btn {
+        width: 30px;
+        height: 30px;
+        background-color: var(--light-grey);
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      
+      .quantity-input {
+        width: 50px;
+        height: 30px;
+        text-align: center;
+        border: 1px solid #ddd;
+        margin: 0 0.5rem;
+      }
+      
+      .save-for-later {
+        margin-top: auto;
+        color: var(--teal-green);
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      
+      .summary-card {
+        background-color: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+      
+      .total-row {
+        border-top: 1px solid #eee;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+      
+      .checkout-btn {
+        width: 100%;
+        padding: 1rem;
+        background-color: var(--deep-maroon);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .checkout-btn:hover {
+        background-color: var(--charcoal-grey);
+      }
+      
+      /* Shipping and Billing Form */
+      .shipping-form {
+        background-color: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      
+      .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-family: 'Playfair Display', serif;
+      }
+      
+      .form-control:focus {
+        outline: none;
+        border-color: var(--deep-maroon);
+      }
+      
+      .form-row {
+        display: flex;
+        gap: 1rem;
+      }
+      
+      .form-row .form-group {
+        flex: 1;
+      }
+      
+      /* Payment Methods */
+      .payment-methods {
+        margin-top: 1.5rem;
+      }
+      
+      .payment-method {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      
+      .payment-method:hover {
+        border-color: var(--deep-maroon);
+      }
+      
+      .payment-method.selected {
+        border-color: var(--deep-maroon);
+        background-color: rgba(128, 0, 32, 0.05);
+      }
+      
+      .payment-method input {
+        margin-right: 1rem;
+      }
+      
+      .payment-icon {
+        margin-right: 1rem;
+        font-size: 1.5rem;
+      }
+      
+      .place-order-btn {
+        width: 100%;
+        padding: 1rem;
+        background-color: var(--royal-gold);
+        color: var(--deep-maroon);
+        border: none;
+        border-radius: 4px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.3s;
+      }
+      
+      .place-order-btn:hover {
+        background-color: var(--soft-gold);
+      }
+      
+      /* Empty Cart */
+      .empty-cart {
+        text-align: center;
+        padding: 3rem 0;
+      }
+      
+      .empty-cart-icon {
+        font-size: 4rem;
+        color: #ddd;
+        margin-bottom: 1rem;
+      }
+      
+      .empty-cart-message {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .continue-shopping-btn {
+        background-color: var(--deep-maroon);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .continue-shopping-btn:hover {
+        background-color: var(--charcoal-grey);
+      }
+      
+      /* Responsive Styles */
+      @media (max-width: 992px) {
+        .cart-container {
+          flex-direction: column;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          padding: 1rem;
+        }
+        
+        nav ul {
+          margin: 1rem 0;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        
+        .cart-page {
+          padding: 0 1rem;
+        }
+        
+        .cart-item-card {
+          flex-direction: column;
+        }
+        
+        .cart-item-image {
+          width: 100%;
+          height: 200px;
+        }
+        
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+      
+      @media (max-width: 576px) {
+        .cart-page-title {
+          font-size: 1.5rem;
+        }
+        
+        .cart-section-title {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <a href="#">
+        <img src="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg" alt="logo">
+      </a>
+      <a href="#" style="text-decoration: none;">
+        <h1>Cira Sari</h1>
+      </a>
+    </div>  
+        
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="./sareeMaking.html">Saree Making</a></li>
+        <li><a href="../index.html#servSec">Services</a></li>
+        <li><a href="./collections.html">Collections</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="./setting.html">Settings</a></li>
+      </ul>
+    </nav>
+
+    <div class="user-actions">
+      <a href="./signin.html">
+        <button class="btn btn-outline">Sign In</button>
+      </a>
+      <div class="cart-icon" id="cartIcon">
+        🛒 <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
+  </header>
+    
+  <div class="cart-page">
+    <h1 class="cart-page-title">Your Shopping Cart</h1>
+    
+    <div class="cart-container">
+      <div class="cart-items-section">
+        <h2 class="cart-section-title">Cart Items (<span id="cartItemCount">0</span>)</h2>
+        <div id="cartPageItems">
+          <!-- Cart items will be dynamically added here -->
+        </div>
+      </div>
+      
+      <div class="cart-summary-section">
+        <h2 class="cart-section-title">Order Summary</h2>
+        <div class="summary-card" id="cartPageSummary">
+          <!-- Order summary will be dynamically added here -->
+        </div>
+        
+        <h2 class="cart-section-title">Shipping Information</h2>
+        <div class="shipping-form">
+          <div class="form-group">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="address" class="form-label">Address</label>
+            <textarea id="address" class="form-control" rows="3" placeholder="Enter your full address" required></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city" class="form-label">City</label>
+              <input type="text" id="city" class="form-control" placeholder="Enter your city" required>
+            </div>
+            <div class="form-group">
+              <label for="state" class="form-label">State</label>
+              <input type="text" id="state" class="form-control" placeholder="Enter your state" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pincode" class="form-label">Pincode</label>
+              <input type="text" id="pincode" class="form-control" placeholder="Enter pincode" required>
+            </div>
+            <div class="form-group">
+              <label for="country" class="form-label">Country</label>
+              <input type="text" id="country" class="form-control" value="India" readonly>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="shippingMethod" class="form-label">Shipping Method</label>
+            <select id="shippingMethod" class="form-control" required>
+              <option value="">Select shipping method</option>
+              <option value="standard">Standard Delivery (5-7 business days) - ₹99</option>
+              <option value="express">Express Delivery (2-3 business days) - ₹199</option>
+            </select>
+          </div>
+          
+          <h3 class="cart-section-title">Billing Information</h3>
+          <div class="form-group">
+            <div class="filter-option">
+              <input type="checkbox" id="sameAsShipping">
+              <label for="sameAsShipping">Same as shipping information</label>
+            </div>
+          </div>
+          
+          <div id="billingInfo" style="display: none;">
+            <div class="form-group">
+              <label for="billingName" class="form-label">Billing Name</label>
+              <input type="text" id="billingName" class="form-control" placeholder="Enter billing name">
+            </div>
+            
+            <div class="form-group">
+              <label for="billingAddress" class="form-label">Billing Address</label>
+              <textarea id="billingAddress" class="form-control" rows="3" placeholder="Enter billing address"></textarea>
+            </div>
+          </div>
+          
+          <h3 class="cart-section-title">Payment Method</h3>
+          <div class="payment-methods">
+            <div class="payment-method selected">
+              <input type="radio" name="payment" id="creditCard" checked>
+              <span class="payment-icon">💳</span>
+              <label for="creditCard">Credit/Debit Card</label>
+            </div>
+            
+            <div class="payment-method">
+              <input type="radio" name="payment" id="netBanking">
+              <span class="payment-icon">🏦</span>
+              <label for="netBanking">Net Banking</label>
+            </div>
+            
+            <div class="payment-method">
+              <input type="radio" name="payment" id="upi">
+              <span class="payment-icon">📱</span>
+              <label for="upi">UPI Payment</label>
+            </div>
+            
+            <div class="payment-method">
+              <input type="radio" name="payment" id="cod">
+              <span class="payment-icon">💰</span>
+              <label for="cod">Cash on Delivery</label>
+            </div>
+          </div>
+          
+          <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cart data
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCartPage();
+      updateCartCount();
+      
+      // Event listeners
+      document.getElementById('sameAsShipping').addEventListener('change', function() {
+        const billingInfo = document.getElementById('billingInfo');
+        billingInfo.style.display = this.checked ? 'none' : 'block';
+        
+        if (this.checked) {
+          document.getElementById('billingName').value = '';
+          document.getElementById('billingAddress').value = '';
+        }
+      });
+      
+      document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
+      
+      // Payment method selection
+      document.querySelectorAll('.payment-method').forEach(method => {
+        method.addEventListener('click', function() {
+          document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+          this.classList.add('selected');
+          this.querySelector('input').checked = true;
+        });
+      });
+    });
+    
+    function renderCartPage() {
+      const cartPageItems = document.getElementById('cartPageItems');
+      const cartItemCount = document.getElementById('cartItemCount');
+      const cartPageSummary = document.getElementById('cartPageSummary');
+      
+      if (cart.length === 0) {
+        cartPageItems.innerHTML = `
+          <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <div class="empty-cart-message">Your cart is empty</div>
+            <a href="./collections.html">
+              <button class="continue-shopping-btn">Continue Shopping</button>
+            </a>
+          </div>
+        `;
+        cartPageSummary.innerHTML = '';
+        return;
+      }
+      
+      // Render cart items
+      cartPageItems.innerHTML = '';
+      let subtotal = 0;
+      
+      cart.forEach(item => {
+        subtotal += item.price * item.quantity;
+        
+        const cartItemElement = document.createElement('div');
+        cartItemElement.className = 'cart-item-card';
+        cartItemElement.innerHTML = `
+          <div class="cart-item-image">
+            <img src="${item.image}" alt="${item.title}">
+          </div>
+          <div class="cart-item-content">
+            <div class="cart-item-header">
+              <h3 class="cart-item-title">${item.title}</h3>
+              <div class="remove-item" data-id="${item.id}">Remove</div>
+            </div>
+            <div class="cart-item-seller">Sold by: ${item.seller}</div>
+            <div class="cart-item-price">₹${item.price.toLocaleString()}</div>
+            <div class="cart-item-quantity">
+              <span class="quantity-label">Quantity:</span>
+              <div class="quantity-controls">
+                <button class="quantity-btn" data-id="${item.id}">-</button>
+                <input type="text" class="quantity-input" value="${item.quantity}" data-id="${item.id}">
+                <button class="quantity-btn" data-id="${item.id}">+</button>
+              </div>
+            </div>
+            <div class="save-for-later" data-id="${item.id}">Save for later</div>
+          </div>
+        `;
+        
+        cartPageItems.appendChild(cartItemElement);
+      });
+      
+      cartItemCount.textContent = cart.length;
+      
+      // Calculate totals
+      const shipping = 99;
+      const tax = subtotal * 0.05; // 5% tax
+      const total = subtotal + shipping + tax;
+      
+      // Update summary
+      cartPageSummary.innerHTML = `
+        <div class="summary-row">
+          <span>Subtotal (${cart.length} items)</span>
+          <span>₹${subtotal.toLocaleString()}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping</span>
+          <span>₹${shipping.toLocaleString()}</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>₹${tax.toLocaleString()}</span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span>₹${total.toLocaleString()}</span>
+        </div>
+      `;
+      
+      // Add event listeners to quantity buttons
+      document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', function() {
+          const productId = this.getAttribute('data-id');
+          removeFromCart(productId);
+        });
+      });
+      
+      document.querySelectorAll('.quantity-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const productId = this.getAttribute('data-id');
+          const isIncrease = this.textContent === '+';
+          updateQuantity(productId, isIncrease);
+        });
+      });
+      
+      document.querySelectorAll('.quantity-input').forEach(input => {
+        input.addEventListener('change', function() {
+          const productId = this.getAttribute('data-id');
+          const newQuantity = parseInt(this.value) || 1;
+          updateQuantity(productId, null, newQuantity);
+        });
+      });
+      
+      document.querySelectorAll('.save-for-later').forEach(button => {
+        button.addEventListener('click', function() {
+          const productId = this.getAttribute('data-id');
+          saveForLater(productId);
+        });
+      });
+    }
+    
+    function updateCartCount() {
+      const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+      document.getElementById('cartCount').textContent = totalItems;
+    }
+    
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      renderCartPage();
+    }
+    
+    function updateQuantity(productId, isIncrease, newQuantity = null) {
+      const item = cart.find(item => item.id === productId);
+      
+      if (item) {
+        if (newQuantity !== null) {
+          item.quantity = Math.max(1, newQuantity);
+        } else if (isIncrease) {
+          item.quantity += 1;
+        } else {
+          item.quantity = Math.max(1, item.quantity - 1);
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCartPage();
+      }
+    }
+    
+    function saveForLater(productId) {
+      // In a real app, you would move this to a "saved items" list
+      alert('Item saved for later!');
+      removeFromCart(productId);
+    }
+    
+    function placeOrder() {
+      // Validate form
+      const form = document.querySelector('.shipping-form');
+      const requiredFields = form.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#f44336';
+          isValid = false;
+        } else {
+          field.style.borderColor = '#ddd';
+        }
+      });
+      
+      if (!isValid) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      // Get shipping info
+      const shippingInfo = {
+        name: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        city: document.getElementById('city').value,
+        state: document.getElementById('state').value,
+        pincode: document.getElementById('pincode').value,
+        country: document.getElementById('country').value,
+        shippingMethod: document.getElementById('shippingMethod').value
+      };
+      
+      // Get billing info if different
+      let billingInfo = null;
+      if (!document.getElementById('sameAsShipping').checked) {
+        billingInfo = {
+          name: document.getElementById('billingName').value,
+          address: document.getElementById('billingAddress').value
+        };
+      }
+      
+      // Get payment method
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').id;
+      
+      // Calculate order total
+      const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+      const shipping = 99;
+      const tax = subtotal * 0.05;
+      const total = subtotal + shipping + tax;
+      
+      // Create order object
+      const order = {
+        date: new Date().toISOString(),
+        items: [...cart],
+        shippingInfo,
+        billingInfo,
+        paymentMethod,
+        subtotal,
+        shipping,
+        tax,
+        total,
+        status: 'processing'
+      };
+      
+      // In a real app, you would send this to your backend
+      console.log('Order placed:', order);
+      
+      // Clear cart
+      cart = [];
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      
+      // Show success message
+      alert('Your order has been placed successfully!');
+      
+      // Redirect to order confirmation page
+      // window.location.href = './order-confirmation.html';
+    }
+  </script>
+</body>
+</html>

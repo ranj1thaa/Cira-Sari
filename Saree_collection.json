@@ -1,0 +1,680 @@
+{
+	"info": {
+		"_postman_id": "a1ebe8ce-771f-43a3-80c7-b738191e8412",
+		"name": "Saree Ke Fal See",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30562372",
+		"_collection_link": "https://developerstrio-0886.postman.co/workspace/DevelopersTrio-Workspace~52f870a8-3a14-4e0c-83ca-fb6e872eab78/collection/30562372-a1ebe8ce-771f-43a3-80c7-b738191e8412?action=share&source=collection_link&creator=30562372"
+	},
+	"item": [
+		{
+			"name": "Saree",
+			"item": [
+				{
+					"name": "Add Saree",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Sambalpuri Handloom Saree\",\r\n  \"image\": \"../Image/sambalpuri-saree-sample.JPG\",\r\n  \"videoUrl\": \"https://www.youtube.com/watch?v=exampleSambalpuriVideo\",\r\n  \"price\": 2799,\r\n  \"seller\": {\r\n    \"name\": \"Odisha Handlooms\",\r\n    \"avatar\": \"https://source.unsplash.com/random/100x100/?person,odisha\",\r\n    \"rating\": 4.7,\r\n    \"description\": \"Crafting authentic Sambalpuri sarees with traditional ikat weaving techniques. Proudly supporting rural artisans from Western Odisha.\",\r\n    \"location\": \"Sambalpur, Odisha\",\r\n    \"products\": 58\r\n  },\r\n  \"fabric\": \"Cotton Silk\",\r\n  \"color\": \"Black and Red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/sarees"
+					},
+					"response": [
+						{
+							"name": "Add Saree",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Banarasi Silk Saree\",\r\n  \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\r\n  \"price\": 3499,\r\n  \"seller\": {\r\n    \"name\": \"Varanasi Weaves\",\r\n    \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\r\n    \"rating\": 4.8,\r\n    \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\r\n    \"location\": \"Varanasi, Uttar Pradesh\",\r\n    \"products\": 42\r\n  },\r\n  \"fabric\": \"Silk\",\r\n  \"color\": \"Red\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/sarees"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "572"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23c-XewSnHf+LAmiaGB36Uc5++b+T9A\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 11:40:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Banarasi Silk Saree\",\n    \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\n    \"price\": 3499,\n    \"seller\": {\n        \"name\": \"Varanasi Weaves\",\n        \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\n        \"rating\": 4.8,\n        \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\n        \"location\": \"Varanasi, Uttar Pradesh\",\n        \"products\": 42\n    },\n    \"fabric\": \"Silk\",\n    \"color\": \"Red\",\n    \"_id\": \"68135dc6655ad7543cfcf5ca\",\n    \"createdAt\": \"2025-05-01T11:40:54.210Z\",\n    \"updatedAt\": \"2025-05-01T11:40:54.210Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Sarees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/sarees"
+					},
+					"response": [
+						{
+							"name": "Get Sarees",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/sarees"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "759"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2f7-cm0S+s6uYnh/e/MFxRiddJd/EKA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 12:12:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": \"68135dc6655ad7543cfcf5ca\",\n        \"title\": \"Banarasi Silk Saree\",\n        \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\n        \"price\": 3499,\n        \"seller\": {\n            \"name\": \"Varanasi Weaves\",\n            \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\n            \"rating\": 4.8,\n            \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\n            \"location\": \"Varanasi, Uttar Pradesh\",\n            \"products\": 42\n        },\n        \"fabric\": \"Silk\",\n        \"color\": \"Red\",\n        \"createdAt\": \"2025-05-01T11:40:54.210Z\",\n        \"updatedAt\": \"2025-05-01T11:40:54.210Z\",\n        \"__v\": 0,\n        \"videoUrl\": \"https://www.youtube.com/watch?embeds_referring_euri=https%3A%2F%2Ffrabjous-hummingbird-c1fd1f.netlify.app%2F&source_ve_path=Mjg2NjQsMTY0NTAz&v=BqH3O4pq9K8&feature=youtu.be\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Update Sarees",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Banarasi Silk Saree Updated\",\r\n  \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\r\n  \"videoUrl\": \"https://www.youtube.com/watch?embeds_referring_euri=https%3A%2F%2Ffrabjous-hummingbird-c1fd1f.netlify.app%2F&source_ve_path=Mjg2NjQsMTY0NTAz&v=BqH3O4pq9K8&feature=youtu.be\",\r\n  \"price\": 3499,\r\n  \"seller\": {\r\n    \"name\": \"Varanasi Weaves\",\r\n    \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\r\n    \"rating\": 4.8,\r\n    \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\r\n    \"location\": \"Varanasi, Uttar Pradesh\",\r\n    \"products\": 42\r\n  },\r\n  \"fabric\": \"Silk\",\r\n  \"color\": \"Red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/sarees/{{saree_id}}"
+					},
+					"response": [
+						{
+							"name": "Update Sareer",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"title\": \"Banarasi Silk Saree Updated\",\r\n  \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\r\n  \"videoUrl\": \"https://www.youtube.com/watch?embeds_referring_euri=https%3A%2F%2Ffrabjous-hummingbird-c1fd1f.netlify.app%2F&source_ve_path=Mjg2NjQsMTY0NTAz&v=BqH3O4pq9K8&feature=youtu.be\",\r\n  \"price\": 3499,\r\n  \"seller\": {\r\n    \"name\": \"Varanasi Weaves\",\r\n    \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\r\n    \"rating\": 4.8,\r\n    \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\r\n    \"location\": \"Varanasi, Uttar Pradesh\",\r\n    \"products\": 42\r\n  },\r\n  \"fabric\": \"Silk\",\r\n  \"color\": \"Red\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/sarees/{{saree_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "765"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2fd-eN3FEHHtp0M8fUj+A3CIT1HtaqA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 12:14:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"68135dc6655ad7543cfcf5ca\",\n    \"title\": \"Banarasi Silk Saree Updated\",\n    \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\n    \"price\": 3499,\n    \"seller\": {\n        \"name\": \"Varanasi Weaves\",\n        \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\n        \"rating\": 4.8,\n        \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\n        \"location\": \"Varanasi, Uttar Pradesh\",\n        \"products\": 42\n    },\n    \"fabric\": \"Silk\",\n    \"color\": \"Red\",\n    \"createdAt\": \"2025-05-01T11:40:54.210Z\",\n    \"updatedAt\": \"2025-05-01T12:14:09.226Z\",\n    \"__v\": 0,\n    \"videoUrl\": \"https://www.youtube.com/watch?embeds_referring_euri=https%3A%2F%2Ffrabjous-hummingbird-c1fd1f.netlify.app%2F&source_ve_path=Mjg2NjQsMTY0NTAz&v=BqH3O4pq9K8&feature=youtu.be\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Saree",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{url}}/sarees/{{saree_id}}"
+					},
+					"response": [
+						{
+							"name": "Get Saree",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "{{url}}/sarees/{{saree_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "765"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2fd-eN3FEHHtp0M8fUj+A3CIT1HtaqA\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 12:18:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_id\": \"68135dc6655ad7543cfcf5ca\",\n    \"title\": \"Banarasi Silk Saree Updated\",\n    \"image\": \"../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG\",\n    \"price\": 3499,\n    \"seller\": {\n        \"name\": \"Varanasi Weaves\",\n        \"avatar\": \"https://source.unsplash.com/random/100x100/?person,indian\",\n        \"rating\": 4.8,\n        \"description\": \"Specializing in authentic Banarasi silk sarees for over 50 years. Our family has been weaving these beautiful sarees for generations.\",\n        \"location\": \"Varanasi, Uttar Pradesh\",\n        \"products\": 42\n    },\n    \"fabric\": \"Silk\",\n    \"color\": \"Red\",\n    \"createdAt\": \"2025-05-01T11:40:54.210Z\",\n    \"updatedAt\": \"2025-05-01T12:14:09.226Z\",\n    \"__v\": 0,\n    \"videoUrl\": \"https://www.youtube.com/watch?embeds_referring_euri=https%3A%2F%2Ffrabjous-hummingbird-c1fd1f.netlify.app%2F&source_ve_path=Mjg2NjQsMTY0NTAz&v=BqH3O4pq9K8&feature=youtu.be\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Saree",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{url}}/sarees/{{saree_id}}"
+					},
+					"response": [
+						{
+							"name": "Delete Saree",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{url}}/sarees/{{saree_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "27"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1b-CncHP3YeC4fb9OgvpDpOW8dt+Ww\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 12:23:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Saree deleted\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Technician",
+			"item": [
+				{
+					"name": "Add Technicians",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Rajesh Kumar\",\r\n  \"specialty\": \"Master Weaver\",\r\n  \"category\": \"master\",\r\n  \"image\": \"../Image/p2.jpg\",\r\n  \"location\": \"Varanasi, Uttar Pradesh\",\r\n  \"rating\": \"★★★★★\",\r\n  \"experience\": \"25 years\",\r\n  \"skills\": [\"Banarasi Weaving\", \"Design Creation\", \"Quality Control\"],\r\n  \"about\": \"Fifth generation master weaver specializing in Banarasi silk sarees with intricate zari work.\",\r\n  \"phone\": \"+91 98765 43210\",\r\n  \"email\": \"rajesh.k@example.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/technicians"
+					},
+					"response": [
+						{
+							"name": "Add Technicians",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Rajesh Kumar\",\r\n  \"specialty\": \"Master Weaver\",\r\n  \"category\": \"master\",\r\n  \"image\": \"../Image/p2.jpg\",\r\n  \"location\": \"Varanasi, Uttar Pradesh\",\r\n  \"rating\": \"★★★★★\",\r\n  \"experience\": \"25 years\",\r\n  \"skills\": [\"Banarasi Weaving\", \"Design Creation\", \"Quality Control\"],\r\n  \"about\": \"Fifth generation master weaver specializing in Banarasi silk sarees with intricate zari work.\",\r\n  \"phone\": \"+91 98765 43210\",\r\n  \"email\": \"rajesh.k@example.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/technicians"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "531"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"213-7P1Uk2+cp+beBfy7cGbS1urqnRk\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 11:42:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Rajesh Kumar\",\n    \"specialty\": \"Master Weaver\",\n    \"category\": \"master\",\n    \"image\": \"../Image/p2.jpg\",\n    \"location\": \"Varanasi, Uttar Pradesh\",\n    \"rating\": \"★★★★★\",\n    \"experience\": \"25 years\",\n    \"skills\": [\n        \"Banarasi Weaving\",\n        \"Design Creation\",\n        \"Quality Control\"\n    ],\n    \"about\": \"Fifth generation master weaver specializing in Banarasi silk sarees with intricate zari work.\",\n    \"phone\": \"+91 98765 43210\",\n    \"email\": \"rajesh.k@example.com\",\n    \"_id\": \"68135e08655ad7543cfcf5cc\",\n    \"createdAt\": \"2025-05-01T11:42:00.981Z\",\n    \"updatedAt\": \"2025-05-01T11:42:00.981Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Process",
+			"item": [
+				{
+					"name": "Add Process",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"number\": 1,\r\n  \"title\": \"Silkworm Rearing\",\r\n  \"description\": \"Raising silkworms under controlled conditions to produce cocoons. These cocoons are the primary source of natural silk fibers used in making sarees.\",\r\n  \"image\": \"../Image/cocons.jpeg\",\r\n  \"materials\": [\"Silk Cocoons\"],\r\n  \"videoUrl\": \"https://www.youtube.com/embed/cgavTIBQ_Z0?si=UL4zHC8wodb1qAC3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/process"
+					},
+					"response": [
+						{
+							"name": "Add Process",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"number\": 1,\r\n  \"title\": \"Silkworm Rearing\",\r\n  \"description\": \"Raising silkworms under controlled conditions to produce cocoons. These cocoons are the primary source of natural silk fibers used in making sarees.\",\r\n  \"image\": \"../Image/cocons.jpeg\",\r\n  \"materials\": [\"Silk Cocoons\"],\r\n  \"videoUrl\": \"https://www.youtube.com/embed/cgavTIBQ_Z0?si=UL4zHC8wodb1qAC3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/process"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "458"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ca-euUdccAEISoV+ck8wNL4IEdf6kw\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 11:44:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"number\": 1,\n    \"title\": \"Silkworm Rearing\",\n    \"description\": \"Raising silkworms under controlled conditions to produce cocoons. These cocoons are the primary source of natural silk fibers used in making sarees.\",\n    \"image\": \"../Image/cocons.jpeg\",\n    \"materials\": [\n        \"Silk Cocoons\"\n    ],\n    \"videoUrl\": \"https://www.youtube.com/embed/cgavTIBQ_Z0?si=UL4zHC8wodb1qAC3\",\n    \"_id\": \"68135e8e655ad7543cfcf5ce\",\n    \"createdAt\": \"2025-05-01T11:44:14.129Z\",\n    \"updatedAt\": \"2025-05-01T11:44:14.129Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Add Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"letter\": \"PS\",\r\n  \"name\": \"Priya Sharma\",\r\n  \"designation\": \"Master Weaver\",\r\n  \"time\": \"2 hours ago\",\r\n  \"title\": \"Traditional Banarasi Weaving Technique\",\r\n  \"description\": \"Sharing some insights into the traditional Banarasi weaving technique that has been passed down in my family for generations. The intricate patterns require immense patience and skill.\",\r\n  \"image\": \"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\",\r\n  \"likes\": \"24 Likes\",\r\n  \"comments\": \"5 Comments\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/posts"
+					},
+					"response": [
+						{
+							"name": "Add Post",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"letter\": \"PS\",\r\n  \"name\": \"Priya Sharma\",\r\n  \"designation\": \"Master Weaver\",\r\n  \"time\": \"2 hours ago\",\r\n  \"title\": \"Traditional Banarasi Weaving Technique\",\r\n  \"description\": \"Sharing some insights into the traditional Banarasi weaving technique that has been passed down in my family for generations. The intricate patterns require immense patience and skill.\",\r\n  \"image\": \"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\",\r\n  \"likes\": \"24 Likes\",\r\n  \"comments\": \"5 Comments\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/posts"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "618"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26a-b/ADsWjyCfNVstgSA8/pzxa6/bg\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 11:45:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"letter\": \"PS\",\n    \"name\": \"Priya Sharma\",\n    \"designation\": \"Master Weaver\",\n    \"time\": \"2 hours ago\",\n    \"title\": \"Traditional Banarasi Weaving Technique\",\n    \"description\": \"Sharing some insights into the traditional Banarasi weaving technique that has been passed down in my family for generations. The intricate patterns require immense patience and skill.\",\n    \"image\": \"https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\",\n    \"likes\": \"24 Likes\",\n    \"comments\": \"5 Comments\",\n    \"_id\": \"68135ecd655ad7543cfcf5d0\",\n    \"createdAt\": \"2025-05-01T11:45:17.008Z\",\n    \"updatedAt\": \"2025-05-01T11:45:17.008Z\",\n    \"__v\": 0\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Chakit Sharma\",          // optional\r\n  \"number\": \"8455082405\",      // optional\r\n  \"isWorker\": true             // optional\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/auth/verify"
+					},
+					"response": [
+						{
+							"name": "Sign Up",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Chakit Sharma\",          // optional\r\n  \"number\": \"8455082405\",      // optional\r\n  \"isWorker\": true             // optional\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/auth/verify"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "271"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10f-532zFt0XEwpUx/pQyxfl8OCRezU\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 11:54:04 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"firebaseUid\": \"ET2GW7EiHSUu0XV7xLV6Hr7RbN92\",\n        \"name\": \"Chakit Sharma\",\n        \"email\": \"chakitsharma444@gmail.com\",\n        \"number\": \"8455082405\",\n        \"isWorker\": true,\n        \"_id\": \"681360dc6c1d9a15342cb29e\",\n        \"createdAt\": \"2025-05-01T11:54:04.043Z\",\n        \"updatedAt\": \"2025-05-01T11:54:04.043Z\",\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:5000/api",
+			"type": "default"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmOWEwNTBkYzRhZTgyOGMyODcxYzMyNTYzYzk5ZDUwMjc3ODRiZTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY2lyYXNhcmktdiIsImF1ZCI6ImNpcmFzYXJpLXYiLCJhdXRoX3RpbWUiOjE3NDYxMDAyNTcsInVzZXJfaWQiOiJFVDJHVzdFaUhTVXUwWFY3eExWNkhyN1JiTjkyIiwic3ViIjoiRVQyR1c3RWlIU1V1MFhWN3hMVjZIcjdSYk45MiIsImlhdCI6MTc0NjEwMDI1NywiZXhwIjoxNzQ2MTAzODU3LCJlbWFpbCI6ImNoYWtpdHNoYXJtYTQ0NEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiY2hha2l0c2hhcm1hNDQ0QGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.km_EfYHiYalyKUOHEzWJO2jk9IvyTbnNll6dFNFFufpWzz_A2nGB0bLvQF31MKLITyzUPgsNI4XFmEasFFP3sh7hrVMuoFeELx8Gu18Nxv-nveKgC8Oyuq-7Vf7RwAI83hIM_2MUE-Ib9obwHBjBjH-fHYoq4_Ff2ZHJ2i8G6D6woUJGHqHwiBkTCiAyhE0ejUWABc75eh6myNbwAfN4-bR4S63hngkpxqxqcul8bUWWwyPIGimFSw_Q5VqeHQm9MMQ00WPS7v4KyNUDWFj5vQvCjIkc5yAgHxltq40CEmhEBou0RANK8pHEn6qq5sercSfrpw9Z-kdImg9Kc--eYg",
+			"type": "default"
+		},
+		{
+			"key": "saree_id",
+			"value": "68135dc6655ad7543cfcf5ca",
+			"type": "default"
+		}
+	]
+}

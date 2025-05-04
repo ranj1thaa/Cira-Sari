@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saree Making Process - Traditional Indian Weaving</title>
+    <link rel="icon" type="image/x-icon" href="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=person" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --deep-maroon: #800020;
+            --royal-gold: #D4AF37;
+            --ivory: #F8F1F1;
+            --teal-green: #008080;
+            --soft-peach: #FDD5B1;
+            --charcoal-grey: #333333;
+            --soft-gold: #E8C872;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', serif;
+            background-color: var(--ivory);
+            color: var(--charcoal-grey);
+            line-height: 1.6;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--deep-maroon);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+          }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logo img{
+        width: 55px;
+        border-radius: 50%;
+        cursor: pointer;
+        }      
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--royal-gold);
+            font-weight: 700;
+            text-decoration: none;
+        }        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }    
+        nav a:hover {
+            color: var(--royal-gold);
+            background-color: rgba(255,255,255,0.1);
+        }
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+        }       
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }     
+        .btn-primary {
+            background-color: var(--royal-gold);
+            color: var(--deep-maroon);
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--royal-gold);
+            color: var(--royal-gold);
+        }
+        
+        /* Main Content */
+        .hero {
+            background: linear-gradient(rgba(128, 0, 32, 0.8), rgba(128, 0, 32, 0.6)), 
+                        url('../Image/IMG_0432.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        
+        }
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--royal-gold);
+        }
+
+        /* Process Section */
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--deep-maroon);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background-color: var(--royal-gold);
+            margin: 1rem auto;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        
+        .process-step {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(212, 175, 55, 0.8);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        /* Modal for Video */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content:center;
+            align-items:center;
+            }
+            
+        .modal-content {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+
+        }
+            
+        .close-modal {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        color: white;
+        font-size: 2rem;
+        cursor: pointer;
+        }
+        
+        .step-number {
+            background-color: var(--deep-maroon);
+            color: var(--royal-gold);
+            font-size: 2rem;
+            font-weight: bold;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-left: 2rem;
+        }
+        
+        .step-content {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+        
+        .step-content h3 {
+            color: var(--deep-maroon);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .step-image {
+            flex: 0 0 40%;
+            max-width: 500px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .step-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .process-step:hover .step-image img {
+            transform: scale(1.05);
+        }
+        
+        .materials-list {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        
+        .material-tag {
+            background-color: var(--soft-peach);
+            color: var(--deep-maroon);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Video Section */
+        .video-section {
+            background-color: var(--soft-peach);
+            padding: 4rem 2rem;
+        }
+        
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Types of Sarees */
+        .types-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .saree-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .saree-type-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .saree-type-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .saree-type-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .saree-type-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .saree-type-card:hover .saree-type-image img {
+            transform: scale(1.1);
+        }
+        
+        .saree-type-info {
+            padding: 1.5rem;
+        }
+        
+        .saree-type-info h3 {
+            color: var(--deep-maroon);
+            margin-bottom: 0.5rem;
+        }
+        
+        .saree-type-info p {
+            color: var(--charcoal-grey);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--deep-maroon);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--royal-gold);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .process-step {
+                flex-direction: column;
+            }
+            
+            .step-image {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .step-number {
+                margin-left: 0;
+                margin-top: -40px;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin: 1rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="logo">
+            <a href="#">
+                <img src="../logo/DALL·E 2025-03-16 17.59.42 - A minimalist yet elegant logo design for 'CiraSari'. The design features a graceful illustration of a woman in a flowing saree, surrounded by vibrant  1.42.33 PM.jpg" alt="logo">
+            </a>
+            <a href="#" style="text-decoration: none;">
+                <h1>Cira Sari</h1>
+            </a>
+        </div>  
+            
+        <nav>
+            <ul>
+                <li><a href="../index.html" class="active">Home</a></li>
+                <li><a href="#">Saree Making</a></li>
+                <li><a href="../index.html#servSec">Services</a></li>
+                <li><a href="../components/collections.html">Collections</a></li>
+                <li><a href="../components/contact.html">Contact</a></li>
+                <li><a href="../components/setting.html">Settings</a></li>
+            </ul>
+        </nav>
+
+        <div class="user-actions">
+            <a href="../index.html">
+                <button class="btn btn-outline">Sign In</button>            
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>The Art of Saree Making</h2>
+        <p>Discover the intricate process behind creating India's most iconic garment</p>
+    </section>
+
+    <!-- Process Steps Section -->
+    <section class="process-container">
+        <h2 class="section-title">Traditional Saree Weaving Process</h2>        
+        <div class="process-steps" id="processSteps">
+        <!--Rendering the steps of making-->
+        </div>
+        <div class="head-el">
+
+        </div>
+    </section>
+
+    <!--Vedio modal-->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeModal()">&times;</span>
+          <iframe id="modalVideo" width="100%" height="450" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="video-container">
+            <h2 class="section-title">Watch the Master Weavers at Work</h2>
+            <div class="video-wrapper">
+                  <iframe src="../Image/WhatsApp Video 2025-04-27 at 11.50.47.mp4"  frameborder="0" allow="accelerometer;
+                   clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Types of Sarees Section -->
+    <section class="types-section">
+        <h2 class="section-title">Different Types of Handwoven Sarees</h2>
+        <a href="./collections.html">
+            <div class="saree-types" id="sareeTypes">
+                <!--Rendering saree collection item-->
+            </div>
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            <p>&copy; 2023 Saree Heritage. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Process Steps Data;
+
+        // Saree Types Data
+        const sareeTypes = [
+            {
+                name: "Banarasi Silk",
+                description: "Luxurious silk sarees from Varanasi with intricate gold/silver zari work, known for their Mughal-inspired designs.",
+                image: "../Image/439f925e-7c24-418d-8819-2a2b97e739f9.JPG",
+                origin: "Varanasi, Uttar Pradesh"
+            },
+            {
+                name: "Kanjivaram",
+                description: "Heavy silk sarees from Tamil Nadu with contrasting borders and rich colors, woven with pure gold zari.",
+                image: "../Image/915aa647-d02e-4459-8e34-f570f3030261.JPG",
+                origin: "Kanchipuram, Tamil Nadu"
+            },
+            {
+                name: "Chanderi",
+                description: "Lightweight sarees from Madhya Pradesh woven with silk and cotton, known for their sheer texture and gold borders.",
+                image: "../Image/13e06b28-6ff1-47a3-9a40-7bad223d70e8.JPG",
+                origin: "Chanderi, Madhya Pradesh"
+            },
+            {
+                name: "Paithani",
+                description: "Maharashtrian sarees with peacock designs and vibrant colors, featuring a distinctive kaleidoscopic border.",
+                image: "../Image/39367c1d-863b-4a24-ad93-5c69e1e6d4f5.JPG",
+                origin: "Paithan, Maharashtra"
+            },
+            {
+                name: "Baluchari",
+                description: "Silk sarees from West Bengal featuring elaborate narrative motifs depicting mythological scenes in the pallu.",
+                image: "../Image/15736072-c4c6-4aa9-ac23-c5d0016f58de.JPG",
+                origin: "Murshidabad, West Bengal"
+            },
+            {
+                name: "Bandhani",
+                description: "Tie-dye sarees from Gujarat and Rajasthan, featuring intricate dot patterns in vibrant colors.",
+                image: "../Image/cd21d0a3-4079-45d8-abcf-b8328ec84b89.JPG",
+                origin: "Gujarat & Rajasthan"
+            }
+        ];
+
+        // Render Functions of process
+        function renderProcessStepsto(steps) {
+            const container = document.getElementById('processSteps');
+            
+            if (!steps || steps.length === 0) {
+                container.innerHTML = '<p>No process steps available</p>';
+                return;
+            }
+            
+            container.innerHTML = steps.map(item => `
+                <div class="process-step">
+                    <div class="step-number">${item.number}</div>
+                    <div class="step-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                        <div class="materials-list">
+                            ${item.materials.map(material => `
+                                <span class="material-tag">${material}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="step-image">
+                        <img src="${item.image}" alt="${item.title}">
+                        ${item.videoUrl ? `
+                            <div class="play-icon" onclick="openModal('${item.videoUrl}')">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+
+        // Render Functions of saree types
+        function renderSareeTypes() {
+            const container = document.getElementById('sareeTypes');
+            container.innerHTML = sareeTypes.map(type => `
+                <div class="saree-type-card">
+                    <div class="saree-type-image">
+                        <img src="${type.image}" alt="${type.name}">
+                    </div>
+                    <div class="saree-type-info">
+                        <h3>${type.name}</h3>
+                        <p>${type.description}</p>
+                        <p><strong>Origin:</strong> ${type.origin}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProcessStepsto();
+            renderSareeTypes();
+        });
+        
+         // Video Modal Functions
+         function openModal(videoUrl) {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('modalVideo');
+            videoFrame.src = videoUrl;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('videoModal');
+            const videoFrame = document.getElementById('modalVideo');
+            modal.style.display = 'none';
+            videoFrame.src = '';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('videoModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:5000/api/process')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    renderProcessStepsto(data); // Call render function with fetched data
+                })
+                .catch(error => {
+                    console.error('Error fetching process steps:', error);
+                    // You could show a fallback message here
+                    document.getElementById('processSteps').innerHTML = 
+                        '<p>Unable to load process steps. Please try again later.</p>';
+                });
+        });
+    </script>
+</body>
+</html>
